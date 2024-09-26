@@ -40,7 +40,7 @@ class Piece:
         print(f"ID: {self.id_pieza}, Color: {self.color}, Valor: {self.valor}, Orientación: {self.orientacion}°")
 
 # Ejemplo de uso
-pieza = Pieza(
+piece = Piece(
     forma=[['#', '#', '#'], [' ', '#', ' '], [' ', '#', ' ']],
     id_pieza=1,
     color='rojo',
@@ -49,12 +49,12 @@ pieza = Pieza(
 )
 
 print("Pieza original:")
-pieza.mostrar_pieza()
+piece.mostrar_pieza()
 
-pieza.rotar()
+piece.rotar()
 print("\nPieza después de rotar:")
-pieza.mostrar_pieza()
+piece.mostrar_pieza()
 
-pieza.reflejar(horizontal=True)
+piece.reflejar(horizontal=True)
 print("\nPieza después de reflejar horizontalmente:")
-pieza.mostrar_pieza()
+piece.mostrar_pieza()
