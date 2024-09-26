@@ -59,3 +59,4 @@ piece.mostrar_pieza()
 piece.reflejar(horizontal=True)
 print("\nPieza después de reflejar horizontalmente:")
 piece.mostrar_pieza()
+#py piece.py para ejecutar
