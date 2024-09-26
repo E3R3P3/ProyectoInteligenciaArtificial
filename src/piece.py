@@ -20,7 +20,7 @@ class Piece:
 
     def rotar(self):
         """Rota la pieza 90 grados en sentido horario."""
-        self.forma = [list(row) for row in zip(*self.forma[::-1])]
+        self.shape = [list(row) for row in zip(*self.shape[::-1])]
         self.orientacion = (self.orientacion + 90) % 360  # Actualiza la orientación
 
     def reflejar(self, horizontal=True):
@@ -29,22 +29,23 @@ class Piece:
         :param horizontal: Si es True, refleja horizontalmente; de lo contrario, refleja verticalmente.
         """
         if horizontal:
-            self.forma = [row[::-1] for row in self.forma]  # Reflejar horizontalmente
+            self.shape = [row[::-1] for row in self.shape]  # Reflejar horizontalmente
         else:
-            self.forma.reverse()  # Reflejar verticalmente
+            self.shape.reverse()  # Reflejar verticalmente
 
     def mostrar_pieza(self):
         """Imprime la pieza en la consola."""
-        for fila in self.forma:
+        for fila in self.shape:
             print(' '.join(fila))
         print(f"ID: {self.id_pieza}, Color: {self.color}, Valor: {self.valor}, Orientación: {self.orientacion}°")
 
 # Ejemplo de uso
 piece = Piece(
-    forma=[['#', '#', '#'], [' ', '#', ' '], [' ', '#', ' ']],
+    shape=[['#', '#', '#'], [' ', '#', ' '], [' ', '#', ' ']],
     id_pieza=1,
     color='rojo',
     valor=10,
+    symbol="T",
     orientacion=0
 )
 
