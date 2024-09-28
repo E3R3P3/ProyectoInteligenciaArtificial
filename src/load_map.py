@@ -30,14 +30,3 @@ NewMap.place_piece(piece_O,2,1)
 # Imprimimos nuevamente el board para ver pieza colocada en la posición indicada anteriormente "2,1"
 NewMap.print_map()
 
-# Para probar los métodos de la clase Piece
-# print("Pieza original:")
-# piece.mostrar_pieza()
-#
-# piece.rotar()
-# print("\nPieza después de rotar:")
-# piece.mostrar_pieza()
-#
-# piece.reflejar(horizontal=True)
-# print("\nPieza después de reflejar horizontalmente:")
-# piece.mostrar_pieza()

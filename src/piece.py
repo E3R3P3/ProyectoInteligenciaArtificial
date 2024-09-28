@@ -1,5 +1,8 @@
+import random
+
 class Piece:
-    def __init__(self, shape,symbol, id_pieza, color, valor, orientacion, coordenada=None): #Aqui agrega mas propiedades para las piezas
+    def __init__(self, shape, symbol, id_pieza, color, valor, orientacion,
+                 coordenada=None):  # Aqui agrega mas propiedades para las piezas
         """
         Inicializa los atributos de la pieza.
 
@@ -10,10 +13,10 @@ class Piece:
         :param orientacion: Orientación de la pieza.
         :param coordenada: Ubicación en el tablero, puede ser None.
         """
-        self.shape = shape #Utilizamos este parametro como una lista para darle la forma a la pieza 
+        self.shape = shape  # Utilizamos este parametro como una lista para darle la forma a la pieza
         self.symbol = symbol
         self.id_pieza = id_pieza
-        self.color = color #Este parametro es para definir la froma pero lo utilizare depues para dale el color
+        self.color = color  # Este parametro es para definir la froma pero lo utilizare depues para dale el color
         self.valor = valor
         self.orientacion = orientacion
         self.coordenada = coordenada
@@ -39,7 +42,37 @@ class Piece:
             print(' '.join(fila))
         print(f"ID: {self.id_pieza}, Color: {self.color}, Valor: {self.valor}, Orientación: {self.orientacion}°")
 
-# Ejemplo de uso
+    # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
+    @classmethod
+    def generar_piezas_random(cls, color):
+        formas_posibles = [
+            [['#', '#'], ['#', '#']],  # Cuadrado 2 x 2
+            [['#', '#', '#'], [' ', '#', ' ']],  # T
+            [['#', ' '], ['#', ' '], ['#', '#']],  # L
+            [['#', '#', '#', '#']],  # Barra
+            [['#', '#'], [' ', '#'], [' ', '#']],  # S
+            [['#']]  # Cuadrado 1x1
+        ]
+        piezas = []
+
+        # Llenará la lista anterior con 21 piezas
+        for i in range(21):
+            shape = formas_posibles[i % len(formas_posibles)]
+            symbol = random.choice(['#', 'L', 'T', '@'])
+            valor = random.randint(1, 10)
+            orientacion = 0
+
+            # Creación de una pieza
+            pieza = cls(shape, symbol, i + 1, color, valor, orientacion)
+
+            # Agregando la pieza creada a la lista de piezas random
+            piezas.append(pieza)
+
+        # Devuelve la lista con las 21 piezas
+        return piezas
+
+
+# Ejemplo de creación de un objeto Piece
 piece = Piece(
     shape=[['#', '#', '#'], [' ', '#', ' '], [' ', '#', ' ']],
     id_pieza=1,
@@ -49,14 +82,16 @@ piece = Piece(
     orientacion=0
 )
 
-print("Pieza original:")
-piece.mostrar_pieza()
+# Para probar los métodos de la clase Piece
+# print("Pieza original:")
+# piece.mostrar_pieza()
+#
+# piece.rotar()
+# print("\nPieza después de rotar:")
+# piece.mostrar_pieza()
+#
+# piece.reflejar(horizontal=True)
+# print("\nPieza después de reflejar horizontalmente:")
 
-piece.rotar()
-print("\nPieza después de rotar:")
-piece.mostrar_pieza()
-
-piece.reflejar(horizontal=True)
-print("\nPieza después de reflejar horizontalmente:")
-piece.mostrar_pieza()
-#py piece.py para ejecutar
+# piece.mostrar_pieza()
+# py piece.py para ejecutar
