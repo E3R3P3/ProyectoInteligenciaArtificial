@@ -82,16 +82,3 @@ piece = Piece(
     orientation=0
 )
 
-# Para probar los métodos de la clase Piece
-# print("Pieza original:")
-# piece.show_piece()
-#
-# piece.rotate()
-# print("\nPieza después de rotate:")
-# piece.show_piece()
-#
-# piece.reflect(horizontal=True)
-# print("\nPieza después de reflect horizontalmente:")
-
-# piece.show_piece()
-# py piece.py para ejecutar
