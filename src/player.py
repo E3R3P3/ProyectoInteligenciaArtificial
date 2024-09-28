@@ -12,11 +12,11 @@ class Player:
         self.pieces = Piece.generar_piezas_random(color)
 
     # Muestra las piezas del jugador horizontalmente, alineadas
-    def mostrar_piezas_jugador(self):
-        max_altura = max(len(pieza.shape) for pieza in self.pieces)
+    def show_player_pieces(self):
+        max_height = max(len(pieza.shape) for pieza in self.pieces)
 
         # Para cada fila de cada pieza
-        for i in range(max_altura):
+        for i in range(max_height):
             for pieza in self.pieces:
                 if i < len(pieza.shape):
                     print(' '.join(map(str, pieza.shape[i])), end='    ')  # Imprimime cada fila
@@ -26,26 +26,26 @@ class Player:
             print()  # Salto de línea después de cada fila de todas las piezas
 
     # Permite al jugador seleccionar una de sus piezas
-    def seleccionar_pieza(self):
+    def pick_piece(self):
         print(f"[{self.name}], estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21): \n")
 
-        self.mostrar_piezas_jugador()
+        self.show_player_pieces()
 
         # Elegir una pieza por número (se le resta 1 para usar como índice)
-        seleccion = int(input("Escribe aquí el número de la pieza que deseas utilizar: ")) - 1
-        return self.pieces[seleccion]
+        selection = int(input("Escribe aquí el número de la pieza que deseas utilizar: ")) - 1
+        return self.pieces[selection]
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
-    def colocar_pieza(self, tablero):
-        pieza_seleccionada = self.seleccionar_pieza()
+    def place_piece(self, tablero):
+        selected_piece = self.pick_piece()
         pos_x = int(input(f"Ingresa el num. de fila: "))
         pos_y = int(input(f"Ingrese el num. de columna: "))
 
         # Coloca la pieza en el tablero usando el método place_piece de Board
-        tablero.place_piece(pieza_seleccionada, pos_x, pos_y)
+        tablero.place_piece(selected_piece, pos_x, pos_y)
 
         # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
-        self.pieces.remove(pieza_seleccionada)
+        self.pieces.remove(selected_piece)
 
         # Muestra el tablero con la pieza colocada
         tablero.print_map()
