@@ -44,8 +44,8 @@ class Piece:
 
     # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
     @classmethod
-    def generar_piezas_random(cls, color):
-        formas_posibles = [
+    def generate_random_pieces(cls, color):
+        possible_shapes = [
             [['#', '#'], ['#', '#']],  # Cuadrado 2 x 2
             [['#', '#', '#'], [' ', '#', ' ']],  # T
             [['#', ' '], ['#', ' '], ['#', '#']],  # L
@@ -53,23 +53,23 @@ class Piece:
             [['#', '#'], [' ', '#'], [' ', '#']],  # S
             [['#']]  # Cuadrado 1x1
         ]
-        piezas = []
+        pieces = []
 
         # Llenará la lista anterior con 21 piezas
         for i in range(21):
-            shape = formas_posibles[i % len(formas_posibles)]
+            shape = possible_shapes[i % len(possible_shapes)]
             symbol = random.choice(['#', 'L', 'T', '@'])
             valor = random.randint(1, 10)
             orientacion = 0
 
             # Creación de una pieza
-            pieza = cls(shape, symbol, i + 1, color, valor, orientacion)
+            piece = cls(shape, symbol, i + 1, color, valor, orientacion)
 
             # Agregando la pieza creada a la lista de piezas random
-            piezas.append(pieza)
+            pieces.append(piece)
 
         # Devuelve la lista con las 21 piezas
-        return piezas
+        return pieces
 
 
 # Ejemplo de creación de un objeto Piece

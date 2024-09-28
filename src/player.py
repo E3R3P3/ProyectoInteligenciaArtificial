@@ -9,20 +9,20 @@ class Player:
         self.player_id = player_id
         self.name = name
         self.color = color
-        self.pieces = Piece.generar_piezas_random(color)
+        self.pieces = Piece.generate_random_pieces(color)
 
     # Muestra las piezas del jugador horizontalmente, alineadas
     def show_player_pieces(self):
-        max_height = max(len(pieza.shape) for pieza in self.pieces)
+        max_height = max(len(piece.shape) for piece in self.pieces)
 
         # Para cada fila de cada pieza
         for i in range(max_height):
-            for pieza in self.pieces:
-                if i < len(pieza.shape):
-                    print(' '.join(map(str, pieza.shape[i])), end='    ')  # Imprimime cada fila
+            for piece in self.pieces:
+                if i < len(piece.shape):
+                    print(' '.join(map(str, piece.shape[i])), end='    ')  # Imprimime cada fila
                 else:
                     # Si la pieza no tiene más filas, imprime espacios vacíos para mantener el espacio
-                    print(' ' * len(' '.join(map(str, pieza.shape[0]))), end='    ')
+                    print(' ' * len(' '.join(map(str, piece.shape[0]))), end='    ')
             print()  # Salto de línea después de cada fila de todas las piezas
 
     # Permite al jugador seleccionar una de sus piezas
@@ -36,19 +36,19 @@ class Player:
         return self.pieces[selection]
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
-    def place_piece(self, tablero):
+    def place_piece(self, board):
         selected_piece = self.pick_piece()
         pos_x = int(input(f"Ingresa el num. de fila: "))
         pos_y = int(input(f"Ingrese el num. de columna: "))
 
         # Coloca la pieza en el tablero usando el método place_piece de Board
-        tablero.place_piece(selected_piece, pos_x, pos_y)
+        board.place_piece(selected_piece, pos_x, pos_y)
 
         # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
         self.pieces.remove(selected_piece)
 
         # Muestra el tablero con la pieza colocada
-        tablero.print_map()
+        board.print_map()
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
 amelia = Player(1, "Amelia", "Blue")
