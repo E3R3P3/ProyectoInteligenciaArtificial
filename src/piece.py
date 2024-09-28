@@ -81,4 +81,3 @@ piece = Piece(
     symbol="T",
     orientation=0
 )
-
