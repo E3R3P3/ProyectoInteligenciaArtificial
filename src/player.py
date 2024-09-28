@@ -36,7 +36,7 @@ class Player:
         return self.pieces[selection]
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
-    def place_piece(self, board):
+    def player_place_piece(self, board):
         selected_piece = self.pick_piece()
         pos_x = int(input(f"Ingresa el num. de fila: "))
         pos_y = int(input(f"Ingrese el num. de columna: "))
@@ -53,4 +53,4 @@ class Player:
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
 amelia = Player(1, "Amelia", "Blue")
 
-# amelia.mostrar_piezas_jugador()
+# amelia.show_pieces_jugador()

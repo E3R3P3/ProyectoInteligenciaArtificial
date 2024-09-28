@@ -1,46 +1,46 @@
 import random
 
 class Piece:
-    def __init__(self, shape, symbol, id_pieza, color, valor, orientacion,
-                 coordenada=None):  # Aqui agrega mas propiedades para las piezas
+    def __init__(self, shape, symbol, piece_id, color, value, orientation,
+                 coordinates=None):  # Aqui agrega mas propiedades para las piezas
         """
         Inicializa los atributos de la pieza.
 
         :param forma: Matriz 2D que representa la disposición de los bloques.
-        :param id_pieza: Identificador de la pieza.
+        :param piece_id: Identificador de la pieza.
         :param color: Color de la pieza.
         :param valor: Valor de la pieza.
-        :param orientacion: Orientación de la pieza.
-        :param coordenada: Ubicación en el tablero, puede ser None.
+        :param orientation: Orientación de la pieza.
+        :param coordinates: Ubicación en el tablero, puede ser None.
         """
         self.shape = shape  # Utilizamos este parametro como una lista para darle la forma a la pieza
         self.symbol = symbol
-        self.id_pieza = id_pieza
+        self.piece_id = piece_id
         self.color = color  # Este parametro es para definir la froma pero lo utilizare depues para dale el color
-        self.valor = valor
-        self.orientacion = orientacion
-        self.coordenada = coordenada
+        self.value = value
+        self.orientation = orientation
+        self.coordinates = coordinates
 
-    def rotar(self):
+    def rotate(self):
         """Rota la pieza 90 grados en sentido horario."""
         self.shape = [list(row) for row in zip(*self.shape[::-1])]
-        self.orientacion = (self.orientacion + 90) % 360  # Actualiza la orientación
+        self.orientation = (self.orientation + 90) % 360  # Actualiza la orientación
 
-    def reflejar(self, horizontal=True):
+    def reflect(self, horizontal=True):
         """Refleja la pieza horizontal o verticalmente.
 
         :param horizontal: Si es True, refleja horizontalmente; de lo contrario, refleja verticalmente.
         """
         if horizontal:
-            self.shape = [row[::-1] for row in self.shape]  # Reflejar horizontalmente
+            self.shape = [row[::-1] for row in self.shape]  # reflect horizontalmente
         else:
-            self.shape.reverse()  # Reflejar verticalmente
+            self.shape.reverse()  # reflect verticalmente
 
-    def mostrar_pieza(self):
+    def show_piece(self):
         """Imprime la pieza en la consola."""
         for fila in self.shape:
             print(' '.join(fila))
-        print(f"ID: {self.id_pieza}, Color: {self.color}, Valor: {self.valor}, Orientación: {self.orientacion}°")
+        print(f"ID: {self.piece_id}, Color: {self.color}, value: {self.value}, Orientación: {self.orientation}°")
 
     # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
     @classmethod
@@ -59,11 +59,11 @@ class Piece:
         for i in range(21):
             shape = possible_shapes[i % len(possible_shapes)]
             symbol = random.choice(['#', 'L', 'T', '@'])
-            valor = random.randint(1, 10)
-            orientacion = 0
+            value = random.randint(1, 10)
+            orientation = 0
 
             # Creación de una pieza
-            piece = cls(shape, symbol, i + 1, color, valor, orientacion)
+            piece = cls(shape, symbol, i + 1, color, value, orientation)
 
             # Agregando la pieza creada a la lista de piezas random
             pieces.append(piece)
@@ -75,23 +75,23 @@ class Piece:
 # Ejemplo de creación de un objeto Piece
 piece = Piece(
     shape=[['#', '#', '#'], [' ', '#', ' '], [' ', '#', ' ']],
-    id_pieza=1,
+    piece_id=1,
     color='rojo',
-    valor=10,
+    value=10,
     symbol="T",
-    orientacion=0
+    orientation=0
 )
 
 # Para probar los métodos de la clase Piece
 # print("Pieza original:")
-# piece.mostrar_pieza()
+# piece.show_piece()
 #
-# piece.rotar()
-# print("\nPieza después de rotar:")
-# piece.mostrar_pieza()
+# piece.rotate()
+# print("\nPieza después de rotate:")
+# piece.show_piece()
 #
-# piece.reflejar(horizontal=True)
-# print("\nPieza después de reflejar horizontalmente:")
+# piece.reflect(horizontal=True)
+# print("\nPieza después de reflect horizontalmente:")
 
-# piece.mostrar_pieza()
+# piece.show_piece()
 # py piece.py para ejecutar
