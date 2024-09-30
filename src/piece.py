@@ -43,17 +43,6 @@ class Piece:
         print(f"ID: {self.piece_id}, Color: {self.color}, value: {self.value}, Orientación: {self.orientation}°")
 
     
-    
-    # def piece_value(pieceShape):
-    #         value =0
-            
-    #         for i in pieceShape:
-    #             for j in i:
-    #                 if j != ' ':
-    #                     print(j)
-    #                     value+=1
-    #         return value
-    
     # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
     @classmethod
     

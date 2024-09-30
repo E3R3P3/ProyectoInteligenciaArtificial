@@ -46,7 +46,7 @@ class Player:
         pos_y = int(input(f"Ingrese el num. de columna: "))
 
         # Coloca la pieza en el tablero usando el método place_piece de Board
-        # board.place_piece(selected_piece, pos_x, pos_y)
+        board.place_piece(selected_piece, pos_x, pos_y)
 
         print('------------ probando rotacion ------------')
         # selected_piece.rotar()
@@ -54,7 +54,7 @@ class Player:
         board.place_piece(selected_piece, pos_x, pos_y)
 
         # # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
-        # self.pieces.remove(selected_piece)
+        self.pieces.remove(selected_piece)
 
         # Muestra el tablero con la pieza colocada
         board.print_map()
