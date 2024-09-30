@@ -50,7 +50,7 @@ class Player:
 
         print('------------ probando rotacion ------------')
         # selected_piece.rotar()
-        selected_piece.reflejar()
+        # selected_piece.
         board.place_piece(selected_piece, pos_x, pos_y)
 
         # # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
@@ -61,6 +61,6 @@ class Player:
     
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
-amelia = Player(1, "Amelia", "Blue")
+# amelia = Player(1, "Amelia", "Blue")
 
 # amelia.show_pieces_jugador()

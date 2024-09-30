@@ -42,9 +42,23 @@ class Piece:
             print(' '.join(fila))
         print(f"ID: {self.piece_id}, Color: {self.color}, value: {self.value}, Orientación: {self.orientation}°")
 
+    
+    
+    # def piece_value(pieceShape):
+    #         value =0
+            
+    #         for i in pieceShape:
+    #             for j in i:
+    #                 if j != ' ':
+    #                     print(j)
+    #                     value+=1
+    #         return value
+    
     # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
     @classmethod
+    
     def generate_random_pieces(cls, color):
+        pieceValues=[1,2,3,3,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5]
         possible_shapes = [
             [['#']],  # 1
             [['#', '#']],  # 2
@@ -74,7 +88,7 @@ class Piece:
         for i in range(21):
             shape = possible_shapes[i]
             symbol = random.choice(['#', 'L', 'T', '@'])
-            value = random.randint(1, 10)
+            value = pieceValues[i]
             orientation = 0
 
             # Creación de una pieza
@@ -86,7 +100,7 @@ class Piece:
         # Devuelve la lista con las 21 piezas
         return pieces
 
-
+    
 # Ejemplo de creación de un objeto Piece
 # piece = Piece(
 #     shape=[['#', '#', '#'], [' ', '#', ' '], [' ', '#', ' ']],
