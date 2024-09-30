@@ -57,7 +57,7 @@ class Player:
         # self.pieces.remove(selected_piece)
 
         # Muestra el tablero con la pieza colocada
-            board.print_map()
+        board.print_map()
     
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
