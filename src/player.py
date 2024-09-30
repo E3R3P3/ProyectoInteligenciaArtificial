@@ -51,6 +51,6 @@ class Player:
         board.print_map()
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
-amelia = Player(1, "Amelia", "Blue")
+# amelia = Player(1, "Amelia", "Blue")
 
 # amelia.mostrar_piezas_jugador()
