@@ -16,7 +16,7 @@ the_board.print_map()
 
 # Prueba la selección de una p ieza y la colocación en el tablero
 print()
-player_amelia .place_piece(the_board)
+player_amelia.place_player_piece(the_board)
 
 # Le muestra al jugador cúantas y cuales piezas le quedan (OPCIONAL)
 # print(f"{jugador_amelia.name}, te quedan estas [{len(jugador_amelia.pieces)}] piezas: ")
