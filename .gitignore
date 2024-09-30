@@ -1,0 +1,53 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# Archivos de configuración de IDEs
+.idea/
+.vscode/
+
+# Archivos de configuración y dependencias
+*.env
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Carpetas de distribuciones
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+*.log
+
+# Archivos de pruebas
+.coverage
+.tox/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pyre/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Librerías de paquetes
+site/
+.local/
+.mypy_cache/
+
+# Archivos creados por el sistema operativo
+.DS_Store
+Thumbs.db
+
