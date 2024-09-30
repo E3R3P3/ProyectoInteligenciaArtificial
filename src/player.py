@@ -9,6 +9,7 @@ class Player:
         self.player_id = player_id
         self.name = name
         self.color = color
+        self.canPlay = True
         self.pieces = Piece.generate_random_pieces(color)
 
     # Muestra las piezas del jugador horizontalmente, alineadas
@@ -30,14 +31,29 @@ class Player:
                     print(' ' * (max_width * 2), end=' ')
             print()  # Nueva línea después de imprimir todas las piezas en esa fila
     # Permite al jugador seleccionar una de sus piezas
-    def pick_piece(self):
-        print(f"[{self.name}], estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21): \n")
+    def pick_piece(self,board):
+        
+        opcionDeJuego=int(input("""
+            Eliga la opcion que desea realizar:
+            [1] Elegir pieza
+            [2] Rendirme
+        """))
+        if opcionDeJuego ==1:
+            print(opcionDeJuego)
+            # player.pick_piece(board)
+            # player.place_player_piece(the_board)
+            print(f"[{self.name}], estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21): \n")
 
-        self.show_player_pieces()
+            self.show_player_pieces()
 
-        # Elegir una pieza por número (se le resta 1 para usar como índice)
-        selection = int(input("Escribe aquí el número de la pieza que deseas utilizar: ")) - 1
-        return self.pieces[selection]
+            # Elegir una pieza por número (se le resta 1 para usar como índice)
+            selection = int(input("Escribe aquí el número de la pieza que deseas utilizar: ")) - 1
+            self.pieces[selection]
+            self.place_player_piece(board)
+        else:
+            self.canPlay=False
+        
+        
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
     def place_player_piece(self, board):
