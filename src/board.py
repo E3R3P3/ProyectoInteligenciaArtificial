@@ -17,13 +17,13 @@ class Board:
             row = f"{idx + 0:2}  " + "   ".join(self.map[idx])
             print(row)
 
-    def place_piece(self, piece, positionInX, positionInY):# Este metodo coloca una pieza en el tablero en la posicion x,y
+    def place_piece(self, piece, positionInX, positionInY): # Este metodo coloca una pieza en el tablero en la posicion x,y
 
-        for i in range(len(piece.shape)):# Recorremos las filas de la pieza.
+        for i in range(len(piece.shape)): # Recorremos las filas de la pieza.
 
-            for j in range(len(piece.shape[i])): # Recorremos las columnas de cada fila de la pieza.
+            for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
 
-                if piece.shape[i][j] != '': # Solo colocamos si validamos que hay un espacio en blanco en la forma.
+                if piece.shape[i][j] != ' ':  # Solo colocamos si validamos que hay un espacio en blanco en la forma.
 
                     if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width: # Verificamos que la posicion de la pieza a dentro de los limites.
 

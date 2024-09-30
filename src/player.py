@@ -40,14 +40,18 @@ class Player:
         return self.pieces[selection]
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
-    def player_place_piece(self, board):
-        while True:
-            selected_piece = self.pick_piece()
-        # pos_x = int(input(f"Ingresa el num. de fila: "))
-        # pos_y = int(input(f"Ingrese el num. de columna: "))
+    def place_player_piece(self, board):
+        selected_piece = self.pick_piece()
+        pos_x = int(input(f"Ingresa el num. de fila: "))
+        pos_y = int(input(f"Ingrese el num. de columna: "))
 
-        # # Coloca la pieza en el tablero usando el método place_piece de Board
+        # Coloca la pieza en el tablero usando el método place_piece de Board
         # board.place_piece(selected_piece, pos_x, pos_y)
+
+        print('------------ probando rotacion ------------')
+        # selected_piece.rotar()
+        selected_piece.reflejar()
+        board.place_piece(selected_piece, pos_x, pos_y)
 
         # # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
         # self.pieces.remove(selected_piece)
