@@ -13,18 +13,22 @@ class Player:
 
     # Muestra las piezas del jugador horizontalmente, alineadas
     def show_player_pieces(self):
+        # Determina la altura máxima de las piezas
         max_height = max(len(piece.shape) for piece in self.pieces)
-
-        # Para cada fila de cada pieza
+        
+        # Determina el ancho máximo de las piezas
+        max_width = max(max(len(row) for row in piece.shape) for piece in self.pieces)
+        
+        # Para cada fila hasta la altura máxima
         for i in range(max_height):
             for piece in self.pieces:
                 if i < len(piece.shape):
-                    print(' '.join(map(str, piece.shape[i])), end='    ')  # Imprimime cada fila
+                    # Si la fila existe en la pieza, imprime la fila alineada con el ancho máximo
+                    print(' '.join(piece.shape[i]).ljust(max_width * 2), end=' ')
                 else:
-                    # Si la pieza no tiene más filas, imprime espacios vacíos para mantener el espacio
-                    print(' ' * len(' '.join(map(str, piece.shape[0]))), end='    ')
-            print()  # Salto de línea después de cada fila de todas las piezas
-
+                    # Si la pieza es más pequeña, imprime espacios vacíos para mantener el formato
+                    print(' ' * (max_width * 2), end=' ')
+            print()  # Nueva línea después de imprimir todas las piezas en esa fila
     # Permite al jugador seleccionar una de sus piezas
     def pick_piece(self):
         print(f"[{self.name}], estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21): \n")
@@ -37,18 +41,20 @@ class Player:
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
     def player_place_piece(self, board):
-        selected_piece = self.pick_piece()
-        pos_x = int(input(f"Ingresa el num. de fila: "))
-        pos_y = int(input(f"Ingrese el num. de columna: "))
+        while True:
+            selected_piece = self.pick_piece()
+        # pos_x = int(input(f"Ingresa el num. de fila: "))
+        # pos_y = int(input(f"Ingrese el num. de columna: "))
 
-        # Coloca la pieza en el tablero usando el método place_piece de Board
-        board.place_piece(selected_piece, pos_x, pos_y)
+        # # Coloca la pieza en el tablero usando el método place_piece de Board
+        # board.place_piece(selected_piece, pos_x, pos_y)
 
-        # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
-        self.pieces.remove(selected_piece)
+        # # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
+        # self.pieces.remove(selected_piece)
 
         # Muestra el tablero con la pieza colocada
-        board.print_map()
+            board.print_map()
+    
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
 amelia = Player(1, "Amelia", "Blue")
