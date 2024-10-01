@@ -30,6 +30,7 @@ class Player:
                     # Si la pieza es más pequeña, imprime espacios vacíos para mantener el formato
                     print(' ' * (max_width * 2), end=' ')
             print()  # Nueva línea después de imprimir todas las piezas en esa fila
+            
     # Permite al jugador seleccionar una de sus piezas
     def pick_piece(self,player, board):
         
@@ -68,14 +69,15 @@ class Player:
 
         print('------------ probando rotacion ------------')
         # selected_piece.rotar()
-        # selected_piece.
-        board.place_piece(selected_piece, pos_x, pos_y)
+        # # selected_piece.
 
-        # # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
+        # # # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
         self.pieces.remove(selected_piece)
 
-        # Muestra el tablero con la pieza colocada
+        # # Muestra el tablero con la pieza colocada
         board.print_map()
+
+
     
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas

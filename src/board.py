@@ -34,3 +34,4 @@ class Board:
                         print("Pieza fuera de los limites")
 
                         return
+   
