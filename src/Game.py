@@ -40,14 +40,14 @@ if initialized_players == False:
         
 bucle=True
 while bucle:
-    #validamos si  en la lista de jugadores al menos 1 no se ha rendido
+    #   validamos si  en la lista de jugadores al menos 1 no se ha rendido
     se_puede_continuar=True if hay_jugadores(listaJugadores) < len(listaJugadores) else False
 
-    #aqui entra al if solo si el resultado es True
+    #   aqui entra al if solo si el resultado es True
     if se_puede_continuar:
         for player in listaJugadores:
-            if player.canPlay: #De la lista de usuarios solo le dar'a el turno al usuario que no se haya rendido
-                player.pick_piece(player,the_board)
+            if player.canPlay: #    De la lista de usuarios solo le dara el turno al usuario que no se haya rendido
+                player.pick_piece(player, the_board)
     else:
         bucle=False
 

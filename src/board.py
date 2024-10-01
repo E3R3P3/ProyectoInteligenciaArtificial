@@ -17,21 +17,18 @@ class Board:
             row = f"{idx + 0:2}  " + "   ".join(self.map[idx])
             print(row)
 
-    def place_piece(self, piece, positionInX, positionInY): # Este metodo coloca una pieza en el tablero en la posicion x,y
-
-        for i in range(len(piece.shape)): # Recorremos las filas de la pieza.
-
-            for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
-
-                if piece.shape[i][j] != ' ':  # Solo colocamos si validamos que hay un espacio en blanco en la forma.
-
-                    if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width: # Verificamos que la posicion de la pieza a dentro de los limites.
-
-                        self.map[positionInX + i][positionInY + j] = piece.symbol # Colocamos el simbolo de la pieza en el mapa.
-
+    def place_piece(self, piece, positionInX, positionInY):
+        # Este metodo coloca una pieza en el tablero en la posicion x,y
+        print(f"Intentando colocar la pieza en {positionInX}, {positionInY}")  # Debug (prueba)
+        for i in range(len(piece.shape)):  # Recorre las filas de la pieza.
+            for j in range(len(piece.shape[i])):  # Recorre las columnas de cada fila de la pieza.
+                if piece.shape[i][j] != ' ':  # Solo coloca si hay un símbolo en la forma.
+                    if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width:  #  Verifica que la posicion de la pieza esté dentro de los límites.
+                        print(f"Colocando parte de la pieza en {positionInX + i}, {positionInY + j}")  # Debug (prueba)
+                        self.map[positionInX + i][
+                            positionInY + j] = piece.symbol  # Coloca el simbolo de la pieza en el mapa.
                     else:
-
-                        print("Pieza fuera de los limites")
-
+                        print("Pieza fuera de los límites")
                         return
+
    

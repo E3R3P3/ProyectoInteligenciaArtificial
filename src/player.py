@@ -11,8 +11,9 @@ class Player:
         self.color = color
         self.canPlay = True
         self.pieces = Piece.generate_random_pieces(color)
+        self.first_move = True
 
-    # Muestra las piezas del jugador horizontalmente, alineadas
+        # Muestra las piezas del jugador horizontalmente, alineadas
     def show_player_pieces(self):
         # Determina la altura máxima de las piezas
         max_height = max(len(piece.shape) for piece in self.pieces)
@@ -59,26 +60,44 @@ class Player:
         
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
-    def place_player_piece(self,selected_piece, board):
-        # selected_piece = self.pick_piece(player,board)
+    def place_player_piece(self, selected_piece, board):
         pos_x = int(input(f"Ingresa el num. de fila: "))
         pos_y = int(input(f"Ingrese el num. de columna: "))
 
-        # Coloca la pieza en el tablero usando el método place_piece de Board
-        board.place_piece(selected_piece, pos_x, pos_y)
+        if self.first_move:
+            # Si es el primer movimiento, la pieza puede colocarse en cualquier lugar
+            board.place_piece(selected_piece, pos_x, pos_y)
+            self.first_move = False  # Actualizamos el estado
+        else:
+            # Si no es el primer movimiento, valida que toque una esquina
+            if self.is_valid_corner(board, selected_piece, pos_x, pos_y):
+                board.place_piece(selected_piece, pos_x, pos_y)
+            else:
+                print("¡La pieza debe tocar otra pieza solo por las esquinas!")
 
-        print('------------ probando rotacion ------------')
-        # selected_piece.rotar()
-        # # selected_piece.
-
-        # # # Elimina la pieza que el jugador utilizó, de su lista de piezas disponibles
+        # Elimina la pieza que el jugador utilizó de su lista de piezas disponibles
         self.pieces.remove(selected_piece)
 
-        # # Muestra el tablero con la pieza colocada
+        # Muestra el tablero con la pieza colocada
         board.print_map()
 
+    # Valida si la pieza toca una esquina de otra pieza
+    def is_valid_corner(self, board, piece, pos_x, pos_y):
+        directions = [(1, 1), (1, -1), (-1, 1), (-1, -1)]  # Direcciones de las esquinas
 
-    
+        for i in range(len(piece.shape)):
+            for j in range(len(piece.shape[i])):
+                if piece.shape[i][j] != ' ':  # Solo verifica las celdas de la pieza que no estan vacias
+                    for dir_x, dir_y in directions:
+                        check_x = pos_x + i + dir_x
+                        check_y = pos_y + j + dir_y
+                        # Verifica si estamos dentro de los límites del tablero
+                        if 0 <= check_x < board.high and 0 <= check_y < board.width:
+                            # Si la celda en la esquina no esta vacia, marca que esta tocando otra pieza
+                            if board.map[check_x][check_y] != '.':
+                                return True
+
+        return False
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
 # amelia = Player(1, "Amelia", "Blue")
