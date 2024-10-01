@@ -17,21 +17,56 @@ class Board:
             row = f"{idx + 0:2}  " + "   ".join(self.map[idx])
             print(row)
 
+    # Metodo para validar que no se superpongan las piezas
+    def can_place_piece(self, piece, positionInX, positionInY):
+        """ Verifica si la pieza se puede colocar en la posición dada sin colisionar con otras piezas """
+        for i in range(len(piece.shape)):  # Recorremos las filas de la pieza.
+            for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
+                if piece.shape[i][j] != ' ':  # Solo verificamos si no es un espacio vacío en la forma.
+                    # Verificamos si la posición de la pieza está dentro de los límites del tablero.
+                    if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width:
+                        # Si la posición ya está ocupada por una pieza diferente de "." (espacio vacío en el tablero)
+                        if self.map[positionInX + i][positionInY + j] != '.':
+                            return False  # No se puede colocar la pieza porque colisionaría
+                    else:
+                        return False  # Está fuera de los límites del tablero
+        return True  # Si pasó todas las validaciones, entonces es válida la colocación
+
     def place_piece(self, piece, positionInX, positionInY): # Este metodo coloca una pieza en el tablero en la posicion x,y
 
-        for i in range(len(piece.shape)): # Recorremos las filas de la pieza.
+        if self.can_place_piece(piece,positionInX,positionInY):
+            for i in range(len(piece.shape)): # Recorremos las filas de la pieza.
 
-            for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
+                for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
 
-                if piece.shape[i][j] != ' ':  # Solo colocamos si validamos que hay un espacio en blanco en la forma.
+                    if piece.shape[i][j] != ' ':  # Solo colocamos si validamos que hay un espacio en blanco en la forma.
 
-                    if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width: # Verificamos que la posicion de la pieza a dentro de los limites.
+                        if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width: # Verificamos que la posicion de la pieza a dentro de los limites.
 
-                        self.map[positionInX + i][positionInY + j] = piece.symbol # Colocamos el simbolo de la pieza en el mapa.
+                            self.map[positionInX + i][positionInY + j] = piece.symbol # Colocamos el simbolo de la pieza en el mapa.
 
-                    else:
+                        else:
 
-                        print("Pieza fuera de los limites")
+                            print("Pieza fuera de los limites")
 
-                        return
-   
+                            return
+            print("Pieza colocada exitosamente.")
+        else:
+            print("Error: No puedes colocar la pieza, está colisionando con otra o está fuera de los límites.")
+
+
+    
+    # def place_piece(self, piece, positionInX, positionInY):
+    #     """ Coloca la pieza en el tablero si es posible, de lo contrario muestra un error """
+    #     if self.can_place_piece(piece, positionInX, positionInY):
+    #         # Si es posible colocar la pieza, lo hacemos
+    #         for i in range(len(piece.shape)):  # Recorremos las filas de la pieza.
+    #             for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
+    #                 if piece.shape[i][j] != ' ':  # Solo colocamos si no es un espacio vacío en la forma.
+    #                     self.map[positionInX + i][positionInY + j] = piece.symbol  # Colocamos el símbolo de la pieza
+    #         print("Pieza colocada exitosamente.")
+    #     else:
+    #         print("Error: No puedes colocar la pieza, está colisionando con otra o está fuera de los límites.")
+
+    #     # Muestra el tablero después de intentar colocar la pieza
+    #     self.print_map()
