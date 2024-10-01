@@ -37,13 +37,13 @@ class Board:
                         if self.map[positionInX + i][positionInY + j - 1] == piece.shape[i][j]:
                             return False
                         # # Derecha
-                        if self.map[positionInX + i][positionInY + j + 1] == piece.symbol[i][j]:
+                        if self.map[positionInX + i][positionInY + j + 1] == piece.shape[i][j]:
                             return False
                         # # Arriba
-                        if self.map[positionInX + i - 1][positionInY + j] == piece.symbol[i][j]:
+                        if self.map[positionInX + i - 1][positionInY + j] == piece.shape[i][j]:
                             return False
                         # # Abajo
-                        if self.map[positionInX + i + 1][positionInY + j] == piece.symbol[i][j]:
+                        if self.map[positionInX + i + 1][positionInY + j] == piece.shape[i][j]:
                             return False
                 
                     else:
