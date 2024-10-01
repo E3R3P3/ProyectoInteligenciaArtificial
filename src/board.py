@@ -4,6 +4,7 @@ class Board:
     def __init__(self, width, high):
         self.width = width
         self.high = high
+        self.possible = True
         # Aqui creamos la matriz del mapa con las dimensiones pasadas y los llenamos con "." para que se pueda ver el mapa
         self.map = [['.' for _ in range(width)] for _ in range(high)]
 
@@ -61,13 +62,14 @@ class Board:
                         if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width: # Verificamos que la posicion de la pieza a dentro de los limites.
 
                             self.map[positionInX + i][positionInY + j] = piece.symbol # Colocamos el simbolo de la pieza en el mapa.
-
+                            self.possible = True
                         else:
 
                             print("Pieza fuera de los limites")
-
+                            self.possible = False
                             return
             print("Pieza colocada exitosamente.")
         else:
+            self.possible = False
             print("Error: No puedes colocar la pieza, está colisionando con otra o está fuera de los límites.")
 
