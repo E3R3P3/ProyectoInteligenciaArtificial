@@ -33,14 +33,16 @@ class Player:
     # Permite al jugador seleccionar una de sus piezas
     def pick_piece(self,player, board):
         
+        print()
+        print(f"Turno de: [{self.name}]\n")
         opcionDeJuego=int(input("""
-            Eliga la opcion que desea realizar:
-            [1] Elegir pieza
-            [2] Rendirme
+        Eliga la opcion que desea realizar:
+        [1] Elegir pieza
+        [2] Rendirme
         """))
+
         if opcionDeJuego ==1:
-            print(opcionDeJuego)
-            print(f"[{self.name}], estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21): \n")
+            print(f"Estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21): \n")
 
             self.show_player_pieces()
             # player.pick_piece(board)
@@ -51,7 +53,7 @@ class Player:
             selected_piece=self.pieces[selection]
             self.place_player_piece(selected_piece,board)
         else:
-            self.canPlay=False
+            player.canPlay=False
         
         
 

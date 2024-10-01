@@ -16,16 +16,29 @@ print("Welcome to BLOKUS! \n")
 the_board.print_map()
 
 # Prueba la selección de una p ieza y la colocación en el tablero
-bucle=True
-cantPlay=0
-while cantPlay < len(listaJugadores):
-    for player in listaJugadores:
-        if player.canPlay:
-            player.pick_piece(player,the_board)
-        else:
-            print("okok")
-            cantPlay+=1
 
+#metodo que retorna un numero 
+def hay_jugadores(lista_jugadores):
+    cantidad_jugadores_rendidos=0 #variable contador
+    for player in lista_jugadores: #acceder a cada elemento de la lista
+        if player.canPlay==False: #Si su propiedad de poder jugar es falsa significa que se rindio'
+            cantidad_jugadores_rendidos+=1
+    return cantidad_jugadores_rendidos
+
+bucle=True
+while bucle:
+    #validamos si  en la lista de jugadores al menos 1 no se ha rendido
+    se_puede_continuar=True if hay_jugadores(listaJugadores) < len(listaJugadores) else False
+
+    #aqui entra al if solo si el resultado es True
+    if se_puede_continuar:
+        for player in listaJugadores:
+            if player.canPlay: #De la lista de usuarios solo le dar'a el turno al usuario que no se haya rendido
+                player.pick_piece(player,the_board)
+    else:
+        bucle=False
+
+#mensaje provisional para validar si se puede jugar
 print("termino' el game")
 
 # Le muestra al jugador cúantas y cuales piezas le quedan (OPCIONAL)
