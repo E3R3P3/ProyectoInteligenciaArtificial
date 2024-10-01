@@ -31,7 +31,7 @@ class Player:
                     print(' ' * (max_width * 2), end=' ')
             print()  # Nueva línea después de imprimir todas las piezas en esa fila
     # Permite al jugador seleccionar una de sus piezas
-    def pick_piece(self,board):
+    def pick_piece(self,player, board):
         
         opcionDeJuego=int(input("""
             Eliga la opcion que desea realizar:
@@ -40,24 +40,24 @@ class Player:
         """))
         if opcionDeJuego ==1:
             print(opcionDeJuego)
-            # player.pick_piece(board)
-            # player.place_player_piece(the_board)
             print(f"[{self.name}], estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21): \n")
 
             self.show_player_pieces()
+            # player.pick_piece(board)
+            # player.place_player_piece(board)
 
             # Elegir una pieza por número (se le resta 1 para usar como índice)
             selection = int(input("Escribe aquí el número de la pieza que deseas utilizar: ")) - 1
-            self.pieces[selection]
-            self.place_player_piece(board)
+            selected_piece=self.pieces[selection]
+            self.place_player_piece(selected_piece,board)
         else:
             self.canPlay=False
         
         
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
-    def place_player_piece(self, board):
-        selected_piece = self.pick_piece()
+    def place_player_piece(self,selected_piece, board):
+        # selected_piece = self.pick_piece(player,board)
         pos_x = int(input(f"Ingresa el num. de fila: "))
         pos_y = int(input(f"Ingrese el num. de columna: "))
 

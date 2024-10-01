@@ -16,10 +16,15 @@ print("Welcome to BLOKUS! \n")
 the_board.print_map()
 
 # Prueba la selección de una p ieza y la colocación en el tablero
-for player in listaJugadores:
-    while player.canPlay:
-        player.pick_piece(the_board)
-        
+bucle=True
+cantPlay=0
+while cantPlay < len(listaJugadores):
+    for player in listaJugadores:
+        if player.canPlay:
+            player.pick_piece(player,the_board)
+        else:
+            print("okok")
+            cantPlay+=1
 
 print("termino' el game")
 
