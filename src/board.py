@@ -48,36 +48,7 @@ class Board:
                         if self.map[positionInX + i + 1][positionInY + j] == piece.shape[i][j]:
                             return False
                         print('Valores: ',self.ferst_play_1,' : ',self.ferst_play_2)
-                        if self.ferst_play_1 != True and self.ferst_play_2 != True:
-                            # Validar Esquina Superior Izquierda
-                            if self.map[positionInX + i - 1][positionInY + j - 1] != piece.shape[i][j]:
-                                if self.map[positionInX + i - 1][positionInY + j + 1] != piece.shape[i][j]:
-                                    if self.map[positionInX + i + 1][positionInY + j - 1] != piece.shape[i][j]:
-                                        if self.map[positionInX + i + 1][positionInY + j + 1] != piece.shape[i][j]:
-                                            print(self.map[positionInX + i - 1][positionInY + j - 1])
-                                            print('Esquina Superior Izquierda')
-                                            return False
-                                        else:
-                                            return True
-                                    else:
-                                        return True
-                                else:
-                                    return True
-                            else:
-                                return True
-                            # Validar Esquina Superior Derecha
-                            # if self.map[positionInX + i - 1][positionInY + j + 1] != piece.shape[i][j]:
-                            #     print('Esquina Superior Derecha')
-                            #     return False
-                            # Validar Esquina Inferior Izquierda
-                            # if self.map[positionInX + i + 1][positionInY + j - 1] != piece.shape[i][j]:
-                            #     print('Esquina Inferior Izquierda')
-                            #     return False
-                            # Validar Esquina Inferior Derecha
-                            # if self.map[positionInX + i + 1][positionInY + j + 1] != piece.shape[i][j]:
-                            #     print('Esquina Inferior Derecha')
-                            #     return False 
-
+                        
                     else:
                         return False  # Está fuera de los límites del tablero
         return True  # Si pasó todas las validaciones, entonces es válida la colocación
