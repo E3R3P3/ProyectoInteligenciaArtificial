@@ -66,7 +66,7 @@ class Player:
 
         # Coloca la pieza en el tablero usando el método place_piece de Board
         print("\033c", end="")
-        board.place_piece(selected_piece, pos_x, pos_y)
+        board.place_piece(selected_piece, pos_x, pos_y, self.player_id)
         
 
         # print('------------ probando rotacion ------------')
