@@ -46,6 +46,19 @@ class Board:
                         if self.map[positionInX + i + 1][positionInY + j] == piece.shape[i][j]:
                             return False
                 
+                         # Validar Esquina Superior Izquierda
+                        if self.map[positionInX + i - 1][positionInY + j - 1] != piece.shape[i][j]:
+                            return False
+                        # Validar Esquina Superior Derecha
+                        if self.map[positionInX + i - 1][positionInY + j + 1] != piece.shape[i][j]:
+                            return False
+                        # Validar Esquina Inferior Izquierda
+                        if self.map[positionInX + i + 1][positionInY + j - 1] != piece.shape[i][j]:
+                            return False
+                        # Validar Esquina Inferior Derecha
+                        if self.map[positionInX + i + 1][positionInY + j + 1] != piece.shape[i][j]:
+                            return False 
+
                     else:
                         return False  # Está fuera de los límites del tablero
         return True  # Si pasó todas las validaciones, entonces es válida la colocación
