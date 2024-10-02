@@ -51,7 +51,7 @@ if initialized_players == False:
         name_player_2 = input('\n\tNombre del segundo jugador:>')
         color_player_2 = 'azul'
         print("\033c", end="")
-        player_1 = Player(1, name_player_1, color_player_2 )
+        player_1 = Player(1, name_player_1, color_player_1 )
         player_2 = Player(2, name_player_2, color_player_2 )
         listaJugadores=[player_1,player_2]
 

@@ -73,10 +73,16 @@ class Piece:
         ]
         pieces = []
 
+        symbols = {'rojo' : '#' ,
+                   'azul' : '@' ,
+                   'amarillo' : 'T' ,
+                   'verde' : 'L' ,
+                   }
+        
         # Llenará la lista anterior con 21 piezas
         for i in range(21):
             shape = possible_shapes[i]
-            symbol = random.choice(['#'])
+            symbol = symbols[color]
             value = pieceValues[i]
             orientation = 0
 

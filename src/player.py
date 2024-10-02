@@ -82,6 +82,13 @@ class Player:
         board.print_map()
 
 
+    #Imprime los valores de la pieza, caracter y color
+    def show_piece_values(self):
+        print(f"Valores de las piezas de {self.name}:")
+        for piece in self.pieces:
+            print(f"ID: {piece.piece_id}, Valor: {piece.value}") 
+
+
     
 
 #  Cada vez que se instancia un jugador, este viene ya con su lista de 21 piezas
