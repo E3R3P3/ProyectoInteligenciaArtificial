@@ -10,6 +10,7 @@ class Player:
         self.name = name
         self.color = color
         self.canPlay = True
+        self.firstMove = True
         self.point = 0# Contenemos los puntos aqui
         self.pieces = Piece.generate_random_pieces(color)
 
@@ -52,21 +53,21 @@ class Player:
             # Elegir una pieza por número (se le resta 1 para usar como índice)
             selection = int(input(" Escribe aquí el número de la pieza que deseas utilizar:>")) - 1
             selected_piece=self.pieces[selection]
-            self.place_player_piece(selected_piece,board)
+            self.place_player_piece(player,selected_piece,board)
         else:
             player.canPlay=False
         
         
 
     # Permite al jugador colocar la pieza seleccionada en el tablero
-    def place_player_piece(self,selected_piece, board):
+    def place_player_piece(self,player,selected_piece, board):
         # selected_piece = self.pick_piece(player,board)
         pos_x = int(input(f" Ingresa el num. de fila:>"))
         pos_y = int(input(f" Ingrese el num. de columna:>"))
 
         # Coloca la pieza en el tablero usando el método place_piece de Board
         print("\033c", end="")
-        board.place_piece(selected_piece, pos_x, pos_y, self.player_id)
+        board.place_piece(player,selected_piece, pos_x, pos_y)
         
 
         # print('------------ probando rotacion ------------')
