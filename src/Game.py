@@ -7,6 +7,22 @@ listaJugadores=[]
 
 the_board = Board(16, 16)
 
+def validate_name(text):
+    while True:
+        name = input(f"\n\tNombre del {text} jugador:>")
+        
+        # Verificar si es solo texto
+        if not name.isalpha():
+            print("\n\tEl nombre solo debe contener letras. Intenta nuevamente.")
+            continue
+        
+        # Verificar la longitud del nombre (por ejemplo, entre 2 y 30 caracteres)
+        if len(name) < 2 or len(name) > 30:
+            print("\n\tEl nombre debe tener entre 2 y 30 caracteres. Intenta nuevamente.")
+            continue
+        
+        # Si pasa ambas validaciones, salimos del bucle
+        return name
 
 def hay_jugadores(lista_jugadores):
     cantidad_jugadores_rendidos=0 #variable contador
@@ -45,10 +61,10 @@ if initialized_players == False:
           ''')
 
     if initialized_players == False:
-        name_player_1 = input('\n\tNombre del primer jugador:>')
+        name_player_1 = validate_name('primer')
         color_player_1 = 'rojo'
 
-        name_player_2 = input('\n\tNombre del segundo jugador:>')
+        name_player_2 = validate_name('segundo')
         color_player_2 = 'azul'
         print("\033c", end="")
         player_1 = Player(1, name_player_1, color_player_1 )
@@ -73,7 +89,7 @@ while bucle:
         for player in listaJugadores:
             if player.canPlay: #De la lista de usuarios solo le dar'a el turno al usuario que no se haya rendido
                 jugadaValida = player.pick_piece(the_board)
-                print("Es jugada valida: ?"+jugadaValida)
+                #print("Es jugada valida: ?",jugadaValida)
                 if(jugadaValida): #valida si jugadaValida es true
                     player.firstMove=False
     else:
@@ -102,6 +118,8 @@ print('''
         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ''')
+
+
 
     
 
