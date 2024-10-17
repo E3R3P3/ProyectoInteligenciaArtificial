@@ -69,9 +69,11 @@ while bucle:
 
     #aqui entra al if solo si el resultado es True
     if se_puede_continuar:
+        jugadaValida = False
         for player in listaJugadores:
             if player.canPlay: #De la lista de usuarios solo le dar'a el turno al usuario que no se haya rendido
-                jugadaValida = player.pick_piece(player.firstMove,the_board)
+                jugadaValida = player.pick_piece(the_board)
+                print("Es jugada valida: ?"+jugadaValida)
                 if(jugadaValida): #valida si jugadaValida es true
                     player.firstMove=False
     else:
