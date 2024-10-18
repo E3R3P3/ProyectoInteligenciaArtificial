@@ -1,8 +1,8 @@
 import random
 
+
 class Piece:
-    def __init__(self, shape, symbol, piece_id, color, value, orientation,
-                 coordinates=None):  # Aqui agrega mas propiedades para las piezas
+    def __init__(self, shape, symbol, piece_id, color, value, orientation, coordinates=None):  # Aqui agrega mas propiedades para las piezas
         """
         Inicializa los atributos de la pieza.
 
@@ -21,20 +21,19 @@ class Piece:
         self.orientation = orientation
         self.coordinates = coordinates
 
-    def rotate(self):
-        """Rota la pieza 90 grados en sentido horario."""
-        self.shape = [list(row) for row in zip(*self.shape[::-1])]
-        self.orientation = (self.orientation + 90) % 360  # Actualiza la orientación
+    # Rota la pieza 90 grados en sentido horario: para uso futuro
+    # def rotate(self):
+    #     self.shape = [list(row) for row in zip(*self.shape[::-1])]
+    #     # Actualiza la orientación
+    #     self.orientation = (self.orientation + 90) % 360
 
-    def reflect(self, horizontal=True):
-        """Refleja la pieza horizontal o verticalmente.
-
-        :param horizontal: Si es True, refleja horizontalmente; de lo contrario, refleja verticalmente.
-        """
-        if horizontal:
-            self.shape = [row[::-1] for row in self.shape]  # reflect horizontalmente
-        else:
-            self.shape.reverse()  # reflect verticalmente
+    # Refleja la pieza pieza horizontal o verticalmente: para uso futuro
+    # def reflect(self, horizontal=True):
+    #     # Si es True, refleja horizontalmente; de lo contrario, refleja verticalmente.
+    #     if horizontal:
+    #         self.shape = [row[::-1] for row in self.shape]  # reflect horizontalmente
+    #     else:
+    #         self.shape.reverse()  # reflect verticalmente
 
     def show_piece(self):
         """Imprime la pieza en la consola."""
@@ -42,12 +41,10 @@ class Piece:
             print(' '.join(fila))
         print(f"ID: {self.piece_id}, Color: {self.color}, value: {self.value}, Orientación: {self.orientation}°")
 
-    
     # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
     @classmethod
-    
     def generate_random_pieces(cls, color):
-        pieceValues=[1,2,3,3,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5]
+        pieceValues = [1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
         possible_shapes = [
             [['#']],  # 1
             [['#', '#']],  # 2
@@ -73,12 +70,12 @@ class Piece:
         ]
         pieces = []
 
-        symbols = {'rojo' : '#' ,
-                   'azul' : '@' ,
-                   'amarillo' : 'T' ,
-                   'verde' : 'L' ,
+        symbols = {'Rojo': '#',
+                   'Azul': '@',
+                   'Amarillo': 'T',
+                   'Verde': 'L',
                    }
-        
+
         # Llenará la lista anterior con 21 piezas
         for i in range(21):
             shape = possible_shapes[i]
@@ -95,7 +92,6 @@ class Piece:
         # Devuelve la lista con las 21 piezas
         return pieces
 
-    
 # Ejemplo de creación de un objeto Piece
 # piece = Piece(
 #     shape=[['#', '#', '#'], [' ', '#', ' '], [' ', '#', ' ']],

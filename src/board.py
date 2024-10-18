@@ -1,11 +1,10 @@
-#from piece import Piece
+# from piece import Piece
 class Board:
     # Constructor de la clase que recibe el alto y ancho del trablero
     def __init__(self, width, high):
         self.width = width
         self.high = high
         self.possible = True
-
         # Aqui creamos la matriz del mapa con las dimensiones pasadas y los llenamos con "." para que se pueda ver el mapa
         self.map = [['.' for _ in range(width)] for _ in range(high)]
 
@@ -22,86 +21,84 @@ class Board:
     # def choca_con_misma_pieza(positionX,positionY,i,j,shape):
 
     # Metodo para validar que no se superpongan las piezas
-    def can_place_piece(self,playerFirstMove, piece, positionInX, positionInY):
-        anyInConer = 0 #variable para validar si hay algun valor en las esquinas
+    def can_place_piece(self, playerFirstMove, piece, positionX, positionY):
         """ Verifica si la pieza se puede colocar en la posición dada sin colisionar con otras piezas """
-        for i in range(len(piece.shape)):  # Recorremos las filas de la pieza.
-            for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
-                if piece.shape[i][j] != ' ':  # Solo verificamos si no es un espacio vacío en la forma.
-                    # Verificamos si la posición de la pieza está dentro de los límites del tablero.
-                    if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width:
-                        # Si la posición ya está ocupada por una pieza diferente de "." (espacio vacío en el tablero)
-                        if self.map[positionInX + i][positionInY + j] != '.':
+        anyInCorner = 0  # Variable para validar si hay algún valor en las esquinas
+        for i in range(len(piece.shape)):
+            for j in range(len(piece.shape[i])):
+                if piece.shape[i][j] != ' ':  # Solo verifica si es parte de la pieza
+                    # Verifica si la posición está dentro de los límites del tablero
+                    if 0 <= positionX + i < self.high and 0 <= positionY + j < self.width:
+                        # Si la posición ya está ocupada, no se puede colocar la pieza
+                        if self.map[positionX + i][positionY + j] != '.':
                             return False  # No se puede colocar la pieza porque colisionaría
-                        
-                        # Verificamos las posiciones adyacentes para evitar piezas similares
-                        # # Izquierda
-                        if self.map[positionInX + i][positionInY + j - 1] == piece.symbol:
-                            return False
-                        # # Derecha
-                        if self.map[positionInX + i][positionInY + j + 1] == piece.symbol:
-                            return False
-                        # # Arriba
-                        if self.map[positionInX + i - 1][positionInY + j] == piece.symbol:
-                            return False
-                        # # Abajo
-                        if self.map[positionInX + i + 1][positionInY + j] == piece.symbol:
-                            return False
-                        
-                        #valores para saber si es el primer turno
-                        #print(f"Es primera jugada?: {playerFirstMove}")
-                        if playerFirstMove == False:
-                            # Validar Esquina Superior Izquierda
-                            '''print("Entrada al validar las esquinas")
-                            print("pieza del usuario" + piece.symbol)
-                            print(self.map[positionInX + i - 1][positionInY + j - 1])'''
-                            if self.map[positionInX + i - 1][positionInY + j - 1] == piece.symbol:
-                                #print('Esquina Superior Izquierda')
-                                anyInConer+=1
-                            if self.map[positionInX + i - 1][positionInY + j + 1] == piece.symbol:
-                                #print('Esquina Superior derecha')
-                                anyInConer+=1
-                            if self.map[positionInX + i + 1][positionInY + j - 1] == piece.symbol:
-                                #print('Esquina inferior izquierda')
-                                anyInConer+=1
-                            if self.map[positionInX + i + 1][positionInY + j + 1] == piece.symbol:
-                                #print('Esquina inferior derecha')
-                                anyInConer+=1
 
+                        # Verificaciones de posiciones adyacentes
+                        # Izquierda
+                        if self.map[positionX + i][positionY + j - 1] == piece.symbol:
+                            return False
+                        # Derecha
+                        if self.map[positionX + i][positionY + j + 1] == piece.symbol:
+                            return False
+                        # Arriba
+                        if self.map[positionX + i - 1][positionY + j] == piece.symbol:
+                            return False
+                        # Abajo
+                        if self.map[positionX + i + 1][positionY + j] == piece.symbol:
+                            return False
+
+                        # Validación de esquinas
+                        if not playerFirstMove:
+                            if self.map[positionX + i - 1][positionY + j - 1] == piece.symbol:
+                                # print('Esquina Superior Izquierda')
+                                anyInCorner += 1
+                            if self.map[positionX + i - 1][positionY + j + 1] == piece.symbol:
+                                # print('Esquina Superior derecha')
+                                anyInCorner += 1
+                            if self.map[positionX + i + 1][positionY + j - 1] == piece.symbol:
+                                # print('Esquina inferior izquierda')
+                                anyInCorner += 1
+                            if self.map[positionX + i + 1][positionY + j + 1] == piece.symbol:
+                                # print('Esquina inferior derecha')
+                                anyInCorner += 1
                     else:
                         return False  # Está fuera de los límites del tablero
-        if playerFirstMove == False:
-            if anyInConer == 0:
-                anyInConer=0
-                return False 
-            else:
-                return True
-        else:
-            return True
+        if not playerFirstMove and anyInCorner == 0:
+            return False  # No hay ninguna esquina tocando
+        return True
 
-    def place_piece(self,playerFirstMove, piece, positionInX, positionInY): # Este metodo coloca una pieza en el tablero en la posicion x,y
-        if self.can_place_piece(playerFirstMove,piece,positionInX,positionInY):
-            for i in range(len(piece.shape)): # Recorremos las filas de la pieza.
+    #  Muestra la pieza colocada en el tablero y retorna una copia del tablero actual, si es posible
+    def place_piece(self, playerFirstMove, piece, positionInX,
+                    positionInY):  # Este metodo coloca una pieza en el tablero en la posicion x,y
+        if self.can_place_piece(playerFirstMove, piece, positionInX, positionInY):
 
+            # Crea una copia del tablero antes de colocar la pieza
+            new_board = Board(self.width, self.high)
+            # Clona el estado actual del tablero
+            new_board.map = [row[:] for row in
+                             self.map]  # Itera sobre cada fila en self.map y crea esta nueva copia de cada una.
+
+            for i in range(len(piece.shape)):  # Recorremos las filas de la pieza.
                 for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
-
                     if piece.shape[i][j] != ' ':  # Solo colocamos si validamos que hay un espacio en blanco en la forma.
-
-                        if 0 <= positionInX + i < self.high and 0 <= positionInY + j < self.width: # Verificamos que la posicion de la pieza a dentro de los limites.
-                            # if ferst_play == 1: 
-                            #     self.ferst_play_1 = False
-                            # elif ferst_play == 2:
-                            #     self.ferst_play_2 = False
-                            self.map[positionInX + i][positionInY + j] = piece.symbol # Colocamos el simbolo de la pieza en el mapa.
-                            self.possible = True
-                        else:
-
-                            print("Pieza fuera de los limites")
-                            self.possible = False
-                            return
-            print("Pieza colocada exitosamente.")
-            return True #Retornamos este valor para saber si se pudo posicionar
+                        new_board.map[positionInX + i][
+                            positionInY + j] = piece.symbol
+                        print("Pieza colocada exitosamente.")
+            return new_board  # Retorna el tablero actualizado
         else:
-            self.possible = False
             print("Error: No puedes colocar la pieza, está colisionando con otra o está fuera de los límites.")
 
+
+#  Evalúa el estado del juego desde la perspectiva de un jugador, para guiar la toma de decisiones de la IA.
+def heuristic(self, player):
+    """
+    Calcula un valor heurístico del tablero para el jugador dado.
+    El puntaje se basa en la cantidad de puntos obtenidos, penalización por piezas restantes,
+    y posibles movimientos futuros.
+    """
+    # Comienza con el puntaje actual del jugador
+    score = player.point
+    # Penalización por piezas restantes (Mientras menos piezas tenga, mejor para él/ella)
+    remaining_pieces_penalty = -len(player.pieces) * 5  # Número al azar
+    score += remaining_pieces_penalty
+    return score
