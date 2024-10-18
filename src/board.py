@@ -1,3 +1,4 @@
+from piece import Piece;
 #from piece import Piece
 class Board:
     # Constructor de la clase que recibe el alto y ancho del trablero
@@ -20,6 +21,55 @@ class Board:
             print(row)
 
     # def choca_con_misma_pieza(positionX,positionY,i,j,shape):
+    
+    def get_available_positions(self, piece_symbol):
+        available_positions = []
+        # Creamos un conjunto para evitar duplicar posiciones
+        checked_positions = set()
+
+        # Verifica si el tablero tiene alguna pieza del usuario
+        has_user_piece = any(piece_symbol in row for row in self.map)
+
+        if not has_user_piece:
+            # Si no hay ninguna pieza del usuario, devolver todas las posiciones vacías del tablero
+            for i in range(self.high):
+                for j in range(self.width):
+                    if self.map[i][j] == '.':  # Verifica que la posición esté vacía
+                        available_positions.append((i, j))
+            return available_positions
+
+        # Si hay piezas del usuario en el tablero, buscar las posiciones en las esquinas
+        for i in range(self.high):
+            for j in range(self.width):
+                # Verificar si la posición es parte de la pieza del usuario
+                if self.map[i][j] == piece_symbol:
+                    # Comprobar las cuatro esquinas alrededor de la pieza
+                    # Esquina superior izquierda
+                    if i > 0 and j > 0 and self.map[i - 1][j - 1] == '.' and (i - 1, j - 1) not in checked_positions:
+                        # Verificar que no hay colisión con piezas en los lados adyacentes
+                        if (self.map[i - 1][j] != piece_symbol and self.map[i][j - 1] != piece_symbol):
+                            available_positions.append((i - 1, j - 1))
+                            checked_positions.add((i - 1, j - 1))
+
+                    # Esquina superior derecha
+                    if i > 0 and j < self.width - 1 and self.map[i - 1][j + 1] == '.' and (i - 1, j + 1) not in checked_positions:
+                        if (self.map[i - 1][j] != piece_symbol and self.map[i][j + 1] != piece_symbol):
+                            available_positions.append((i - 1, j + 1))
+                            checked_positions.add((i - 1, j + 1))
+
+                    # Esquina inferior izquierda
+                    if i < self.high - 1 and j > 0 and self.map[i + 1][j - 1] == '.' and (i + 1, j - 1) not in checked_positions:
+                        if (self.map[i + 1][j] != piece_symbol and self.map[i][j - 1] != piece_symbol):
+                            available_positions.append((i + 1, j - 1))
+                            checked_positions.add((i + 1, j - 1))
+
+                    # Esquina inferior derecha
+                    if i < self.high - 1 and j < self.width - 1 and self.map[i + 1][j + 1] == '.' and (i + 1, j + 1) not in checked_positions:
+                        if (self.map[i + 1][j] != piece_symbol and self.map[i][j + 1] != piece_symbol):
+                            available_positions.append((i + 1, j + 1))
+                            checked_positions.add((i + 1, j + 1))
+
+        return available_positions
 
     # Metodo para validar que no se superpongan las piezas
     def can_place_piece(self,playerFirstMove, piece, positionInX, positionInY):
@@ -80,6 +130,10 @@ class Board:
             return True
 
     def place_piece(self,playerFirstMove, piece, positionInX, positionInY): # Este metodo coloca una pieza en el tablero en la posicion x,y
+        print("Mensaje para saber si se borra la terminar antes de las posiciones disponibles :")
+        print(self.get_available_positions(piece.symbol))
+        print("Mensaje para validar si el metodo de piezas habiles funciona:")
+        print(piece.available_pieces_for_positions(playerFirstMove,self))
         if self.can_place_piece(playerFirstMove,piece,positionInX,positionInY):
             for i in range(len(piece.shape)): # Recorremos las filas de la pieza.
 

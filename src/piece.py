@@ -42,6 +42,24 @@ class Piece:
             print(' '.join(fila))
         print(f"ID: {self.piece_id}, Color: {self.color}, value: {self.value}, Orientación: {self.orientation}°")
 
+    def available_pieces_for_positions(self,playerFirstMove, board):
+        """
+        Genera una lista de piezas que se pueden colocar en al menos una de las posiciones disponibles.
+        """
+        
+        # Obtener todas las posiciones disponibles en el tablero para el símbolo del jugador
+        available_positions = board.get_available_positions(self.symbol)
+        valid_pieces = []  # Lista para almacenar las piezas que pueden ser colocadas
+
+        # Probar si la pieza se puede colocar en alguna de las posiciones disponibles
+        for pos in available_positions:
+            # Si la pieza se puede colocar en la posición actual, agregarla a la lista de piezas válidas
+            if board.can_place_piece(playerFirstMove, self, pos[0], pos[1]):
+                valid_pieces.append(self.piece_id)
+                break  # Salir del bucle si la pieza ya es válida para una posición
+        print(valid_pieces) 
+        return valid_pieces
+
     
     # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
     @classmethod

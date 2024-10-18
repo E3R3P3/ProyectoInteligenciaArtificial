@@ -1,5 +1,7 @@
 from piece import Piece
 from board import Board
+import copy
+
 
 # Regla de Blokus: Cada jugador debe empezar con 21 piezas
 class Player:
