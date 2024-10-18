@@ -99,23 +99,23 @@ class Board:
                             return False
                         
                         #valores para saber si es el primer turno
-                        print(f"Es primera jugada?: {playerFirstMove}")
+                        #print(f"Es primera jugada?: {playerFirstMove}")
                         if playerFirstMove == False:
                             # Validar Esquina Superior Izquierda
-                            print("Entrada al validar las esquinas")
+                            '''print("Entrada al validar las esquinas")
                             print("pieza del usuario" + piece.symbol)
-                            print(self.map[positionInX + i - 1][positionInY + j - 1])
+                            print(self.map[positionInX + i - 1][positionInY + j - 1])'''
                             if self.map[positionInX + i - 1][positionInY + j - 1] == piece.symbol:
-                                print('Esquina Superior Izquierda')
+                                #print('Esquina Superior Izquierda')
                                 anyInConer+=1
                             if self.map[positionInX + i - 1][positionInY + j + 1] == piece.symbol:
-                                print('Esquina Superior derecha')
+                                #print('Esquina Superior derecha')
                                 anyInConer+=1
                             if self.map[positionInX + i + 1][positionInY + j - 1] == piece.symbol:
-                                print('Esquina inferior izquierda')
+                                #print('Esquina inferior izquierda')
                                 anyInConer+=1
                             if self.map[positionInX + i + 1][positionInY + j + 1] == piece.symbol:
-                                print('Esquina inferior derecha')
+                                #print('Esquina inferior derecha')
                                 anyInConer+=1
 
                     else:
