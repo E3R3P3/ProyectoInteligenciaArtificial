@@ -26,40 +26,40 @@ class Board:
         anyInCorner = 0  # Variable para validar si hay algún valor en las esquinas
         for i in range(len(piece.shape)):
             for j in range(len(piece.shape[i])):
-                if piece.shape[i][j] != ' ':  # Solo verifica si es parte de la pieza
+                if piece.shape[i][j] != '.':  # Solo verifica si es parte de la pieza
                     # Verifica si la posición está dentro de los límites del tablero
                     if 0 <= positionX + i < self.high and 0 <= positionY + j < self.width:
                         # Si la posición ya está ocupada, no se puede colocar la pieza
                         if self.map[positionX + i][positionY + j] != '.':
                             return False  # No se puede colocar la pieza porque colisionaría
 
-                        # Verificaciones de posiciones adyacentes
+                        # Verificaciones de posiciones adyacentes (asegura que estén dentro de los límites)
                         # Izquierda
-                        if self.map[positionX + i][positionY + j - 1] == piece.symbol:
+                        if positionY + j - 1 >= 0 and self.map[positionX + i][positionY + j - 1] == piece.symbol:
                             return False
                         # Derecha
-                        if self.map[positionX + i][positionY + j + 1] == piece.symbol:
+                        if positionY + j + 1 < self.width and self.map[positionX + i][positionY + j + 1] == piece.symbol:
                             return False
                         # Arriba
-                        if self.map[positionX + i - 1][positionY + j] == piece.symbol:
+                        if positionX + i - 1 >= 0 and self.map[positionX + i - 1][positionY + j] == piece.symbol:
                             return False
                         # Abajo
-                        if self.map[positionX + i + 1][positionY + j] == piece.symbol:
+                        if positionX + i + 1 < self.high and self.map[positionX + i + 1][positionY + j] == piece.symbol:
                             return False
 
                         # Validación de esquinas
                         if not playerFirstMove:
-                            if self.map[positionX + i - 1][positionY + j - 1] == piece.symbol:
-                                # print('Esquina Superior Izquierda')
+                            if positionX + i - 1 >= 0 and positionY + j - 1 >= 0 and \
+                                    self.map[positionX + i - 1][positionY + j - 1] == piece.symbol:
                                 anyInCorner += 1
-                            if self.map[positionX + i - 1][positionY + j + 1] == piece.symbol:
-                                # print('Esquina Superior derecha')
+                            if positionX + i - 1 >= 0 and positionY + j + 1 < self.width and \
+                                    self.map[positionX + i - 1][positionY + j + 1] == piece.symbol:
                                 anyInCorner += 1
-                            if self.map[positionX + i + 1][positionY + j - 1] == piece.symbol:
-                                # print('Esquina inferior izquierda')
+                            if positionX + i + 1 < self.high and positionY + j - 1 >= 0 and \
+                                    self.map[positionX + i + 1][positionY + j - 1] == piece.symbol:
                                 anyInCorner += 1
-                            if self.map[positionX + i + 1][positionY + j + 1] == piece.symbol:
-                                # print('Esquina inferior derecha')
+                            if positionX + i + 1 < self.high and positionY + j + 1 < self.width and \
+                                    self.map[positionX + i + 1][positionY + j + 1] == piece.symbol:
                                 anyInCorner += 1
                     else:
                         return False  # Está fuera de los límites del tablero
@@ -68,37 +68,24 @@ class Board:
         return True
 
     #  Muestra la pieza colocada en el tablero y retorna una copia del tablero actual, si es posible
-    def place_piece(self, playerFirstMove, piece, positionInX,
-                    positionInY):  # Este metodo coloca una pieza en el tablero en la posicion x,y
+    def place_piece(self, playerFirstMove, piece, positionInX, positionInY):
+        # Este metodo coloca una pieza en el tablero en la posicion x,y
         if self.can_place_piece(playerFirstMove, piece, positionInX, positionInY):
-
-            # Crea una copia del tablero antes de colocar la pieza
-            new_board = Board(self.width, self.high)
-            # Clona el estado actual del tablero
-            new_board.map = [row[:] for row in
-                             self.map]  # Itera sobre cada fila en self.map y crea esta nueva copia de cada una.
-
             for i in range(len(piece.shape)):  # Recorremos las filas de la pieza.
                 for j in range(len(piece.shape[i])):  # Recorremos las columnas de cada fila de la pieza.
-                    if piece.shape[i][j] != ' ':  # Solo colocamos si validamos que hay un espacio en blanco en la forma.
-                        new_board.map[positionInX + i][
-                            positionInY + j] = piece.symbol
-                        print("Pieza colocada exitosamente.")
-            return new_board  # Retorna el tablero actualizado
+                    if piece.shape[i][j] != '.':  # Solo colocamos si validamos que hay un espacio en blanco en la forma.
+                        self.map[positionInX + i][positionInY + j] = piece.symbol
+            # print(f"Pieza {piece.symbol} colocada en el tablero.")
+            return True
         else:
             print("Error: No puedes colocar la pieza, está colisionando con otra o está fuera de los límites.")
+            return False
 
 
 #  Evalúa el estado del juego desde la perspectiva de un jugador, para guiar la toma de decisiones de la IA.
 def heuristic(self, player):
-    """
-    Calcula un valor heurístico del tablero para el jugador dado.
-    El puntaje se basa en la cantidad de puntos obtenidos, penalización por piezas restantes,
-    y posibles movimientos futuros.
-    """
-    # Comienza con el puntaje actual del jugador
     score = player.point
-    # Penalización por piezas restantes (Mientras menos piezas tenga, mejor para él/ella)
-    remaining_pieces_penalty = -len(player.pieces) * 5  # Número al azar
+    remaining_pieces_penalty = -len(player.pieces) * 5
     score += remaining_pieces_penalty
     return score
+

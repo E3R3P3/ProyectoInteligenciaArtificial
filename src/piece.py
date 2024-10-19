@@ -70,11 +70,7 @@ class Piece:
         ]
         pieces = []
 
-        symbols = {'Rojo': '#',
-                   'Azul': '@',
-                   'Amarillo': 'T',
-                   'Verde': 'L',
-                   }
+        symbols = {'Rojo': '#', 'Azul': '@', 'Amarillo': 'T', 'Verde': 'L'}
 
         # Llenará la lista anterior con 21 piezas
         for i in range(21):
@@ -88,7 +84,6 @@ class Piece:
 
             # Agregando la pieza creada a la lista de piezas random
             pieces.append(piece)
-
         # Devuelve la lista con las 21 piezas
         return pieces
 

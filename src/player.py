@@ -63,6 +63,7 @@ class Player:
                         self.firstMove = False
                         self.pieces.remove(piece)  # Remueve la pieza después de colocarla
                         self.point += piece.value
+                        print(f"Pieza colocada en la posición ({pos_x}, {pos_y}). Tablero actualizado.")
                         return True
                     else:
                         print("Error: No puedes colocar la pieza en esta posición.")
@@ -79,11 +80,13 @@ class Player:
             return None
 
         if select == "1":
-            selected_piece = self.select_piece()
+            selected_piece = self.select_piece()  # Elige la pieza
             if self.make_move(selected_piece, board):
                 print(f"Pieza colocada exitosamente. {selected_piece.value} puntos añadidos.")
-                return selected_piece  # O devuelve un diccionario con detalles de la jugada
+                return True  # Asegura que retorna True cuando la jugada fue exitosa
             else:
                 print("No se pudo colocar la pieza.")
-        return None
+        return False  # Retorna False si no se pudo realizar la jugada
+
+
 
