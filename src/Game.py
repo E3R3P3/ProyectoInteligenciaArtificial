@@ -79,6 +79,8 @@ class Game:
                 print("\nEl juego ha terminado. No hay más movimientos posibles.")
                 break
             if player.canPlay:
+                print(f'{self.current_turn}')
+                # Si es IA
                 if player.type == "IA":
                     print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada...")
                     solver = MinimaxSolver(player.name)
@@ -93,6 +95,8 @@ class Game:
                             print(f"Error: {player.name} no pudo colocar la pieza.")
                     else:
                         print(f"{player.name} no tiene movimientos válidos.")
+                        player.canPlay = False
+                # Si es Humano
                 else:
                     jugada_valida = player.pick_piece(self.the_board)
                     if jugada_valida:
@@ -157,12 +161,15 @@ class Game:
     #  Verifica si el juego ha terminado:
     #  Si ya no hay más movimientos posibles o si todos los jugadores se han rendido o ya no tienen piezas
     def is_terminal(self):
+        # Verifica si todos los jugadores ya no pueden jugar más (rendidos o sin piezas válidas)
         all_players_done = all(not player.canPlay or len(player.pieces) == 0 for player in self.listaJugadores)
-        if all_players_done:
-            return True
 
+        if all_players_done:
+            return True  # Si todos los jugadores han terminado
+
+        # Verifica si aún hay espacios vacíos en el tablero (esto evita el final antes de tiempo)
         for row in self.the_board.map:
-            if '.' in row:  # Si aún hay espacios vacíos, el tablero no está lleno
+            if '.' in row:
                 return False
 
         return True
