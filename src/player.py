@@ -48,6 +48,9 @@ class Player:
                 return self.pieces[selection]
             print("\n\tIngresa un número válido. Intenta nuevamente.")
 
+    def delete_ia_piece(self, piece):
+        self.pieces.remove(piece)
+
     #  Permite al jugador colocar su pieza en el board.
     #  Lógica de colocación REAL
     def make_move(self, piece, board):
@@ -66,27 +69,32 @@ class Player:
                         print(f"Pieza colocada en la posición ({pos_x}, {pos_y}). Tablero actualizado.")
                         return True
                     else:
-                        print("Error: No puedes colocar la pieza en esta posición.")
+                        print("En tu primera jugada, debes colocar la pieza en una esquina.")
             print("Posición no válida. Intenta nuevamente.")
 
     #  Combina selección y colocación de la pieza para separar responsabilidades
     def pick_piece(self, board):
         print(f"\nTurno de: [{self.name}], de tipo: {self.type}")
 
-        select = input(f"\nElija la opción que desea realizar:\n[1] Elegir pieza\n[2] Rendirme\n:> ")
+        # Bucle hasta que el usuario ingrese una opción válida
+        while True:
+            select = input(f"\nElija la opción que desea realizar:\n[1] Elegir pieza\n[2] Rendirme\n:> ")
 
-        if select == "2":
-            self.canPlay = False
-            return None
+            if select == "2":  # Si elige rendirse
+                self.canPlay = False
+                return None
 
-        if select == "1":
-            selected_piece = self.select_piece()  # Elige la pieza
-            if self.make_move(selected_piece, board):
-                print(f"Pieza colocada exitosamente. {selected_piece.value} puntos añadidos.")
-                return True  # Asegura que retorna True cuando la jugada fue exitosa
-            else:
-                print("No se pudo colocar la pieza.")
-        return False  # Retorna False si no se pudo realizar la jugada
+            if select == "1":  # Si elige colocar una pieza
+                selected_piece = self.select_piece()  # Elige la pieza
+                if self.make_move(selected_piece, board):  # Intenta colocarla en el tablero
+                    print(f"Pieza colocada exitosamente. + {selected_piece.value} puntos sumados.")
+                    return True
+                else:
+                    print("No se pudo colocar la pieza. Intenta nuevamente.")
+
+            # Mensaje de error si elige una opción inválida
+            print("Opción no válida. Por favor, elige [1] o [2].")
+
 
 
 

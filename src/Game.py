@@ -75,11 +75,9 @@ class Game:
         self.the_board.print_map()
         while self.has_players():
             player = self.current_player()
-
             if self.is_terminal():
                 print("\nEl juego ha terminado. No hay más movimientos posibles.")
                 break
-
             if player.canPlay:
                 if player.type == "IA":
                     print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada...")
@@ -88,8 +86,9 @@ class Game:
                     if best_move:
                         piece, position = best_move
                         if self.the_board.place_piece(player.firstMove, piece, position[0], position[1]):
+                            player.delete_ia_piece(piece)
                             player.firstMove = False
-                            print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}.")
+                            print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
                         else:
                             print(f"Error: {player.name} no pudo colocar la pieza.")
                     else:
@@ -117,7 +116,7 @@ class Game:
                     ░░░░░░░░░░░░░░░░░░  FELICIDADES  ░░░░░░░░░░░░░░░░░░░░░░
             ''')
 
-    #   Genera todos los posibles estados futuros del juego a partir de cada jugada posible del jugador actual.
+    #   Genera todos los posibles estados de juego a partir de cada jugada válida.
     def children(self):
         possible_states = []
         current_player = self.current_player()
@@ -125,27 +124,35 @@ class Game:
         if len(current_player.pieces) == 0:  # Si no quedan piezas, no genera estados
             return possible_states
 
+        contador_estados = 0  # Contador para medir los estados generados
+
         for piece in current_player.pieces:
             for x in range(self.the_board.high):
                 for y in range(self.the_board.width):
+                    # Intenta colocar la pieza en todas las posiciones posibles del tablero
                     if self.the_board.can_place_piece(current_player.firstMove, piece, x, y):
                         new_board = Board(self.the_board.width, self.the_board.high)
                         new_board.map = [row[:] for row in self.the_board.map]
 
                         new_player = copy.deepcopy(current_player)
                         new_board.place_piece(new_player.firstMove, piece, x, y)
-                        new_player.firstMove = False
+                        new_player.firstMove = False  # Marcamos que ya no es la primera jugada
 
+                        # Crea el nuevo estado del juego
                         new_game_state = Game.__new__(Game)
                         new_game_state.the_board = new_board
                         new_game_state.listaJugadores = self.listaJugadores.copy()
                         new_game_state.listaJugadores[self.current_turn] = new_player
                         new_game_state.current_turn = (self.current_turn + 1) % len(self.listaJugadores)
-                        new_board.print_map()
                         move = (piece, (x, y))
+
+                        # Agrega el nuevo estado a la lista de posibles estados
                         possible_states.append((move, new_game_state))
 
-        return possible_states
+                        contador_estados += 1  # Incrementa el contador
+
+        print(f"Estados generados: {contador_estados}")
+        return possible_states[:1000]  # Limitar la generación de estados a 100 si es necesario
 
     #  Verifica si el juego ha terminado:
     #  Si ya no hay más movimientos posibles o si todos los jugadores se han rendido o ya no tienen piezas
