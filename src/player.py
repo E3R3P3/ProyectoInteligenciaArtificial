@@ -45,6 +45,7 @@ class Player:
             selection = input("Escribe el número de la pieza que deseas utilizar:> ")
             if selection.isdigit() and 1 <= int(selection) <= len(self.pieces):
                 selection = int(selection) - 1
+                self.pieces[selection].show_piece()
                 return self.pieces[selection]
             print("\n\tIngresa un número válido. Intenta nuevamente.")
 

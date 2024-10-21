@@ -1,5 +1,6 @@
 from board import Board
 from player import Player
+import random
 import copy
 from MinimaxSolver import MinimaxSolver
 
@@ -22,6 +23,7 @@ class Game:
         #  Configura los jugadores al comienzo del juego
 
     def initial_settings(self):
+        print("\033c", end="")
         while True:
             print('''
                             ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -53,7 +55,7 @@ class Game:
                             ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
                             ░░░░░░░░░░░░░░░░░░░-- BLOKUS --░░░░░░░░░░░░░░░░░░░░░░░
                             ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-                \n\t\t[1]: 2 jugadores\n\n\t\t[2]: 4 jugadores
+                \n\t\t[1]: 2 jugadores\n\n\t\t[2]: 4 jugadores\n\n\t\t[3]: IA vs IA
                     ''')
 
             option = input('\t\t:>')
@@ -196,7 +198,16 @@ class Game:
             player_4 = Player(4, name_player_4, color_player_4, player_type=player_4_type)
 
             self.listaJugadores = [player_1, player_2, player_3, player_4]
+        
+        if option == 3:
+            name_player_1 = 'IA'
+            color_player_1 = 'Rojo'
+            name_player_2 = 'IAA'
+            color_player_2 = 'Azul'
+            player_1 = Player(1, name_player_1, color_player_1, player_type='IA')
+            player_2 = Player(2, name_player_2, color_player_2, player_type='IA')
 
+            self.listaJugadores = [player_1, player_2]
 
         self.initialized_players = True
     
@@ -207,7 +218,7 @@ class Game:
                 print('\n\tSolo numeros, no letras. Intenta nuevamente.')
                 return False
         option = int(option)
-        if option < 1 or option > 2:
+        if option < 1 or option > 3:
             print("\033c", end="")
             print('\n\tSolo numeros, de las opciones. Intenta nuevamente.')
             return False 
@@ -257,41 +268,74 @@ class Game:
 
                 #print(f'AAA{self.current_turn}')
                 # Si es IA
+               
 
                 if player.type == "IA":
+ #++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    if not player.firstMove:
 
-                    print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada...")
-                    solver = MinimaxSolver(player.name)
-                    solver.max_time = self.Game_max_time
-                    best_move = solver.solve(self)
+                        print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada...")
+                        solver = MinimaxSolver(player.name)
+                        solver.max_time = self.Game_max_time
+                        best_move = solver.solve(self)
 
-                    if best_move:
+                        if best_move:
 
-                        piece, position = best_move
+                            piece, position = best_move
 
-                        if self.the_board.place_piece(player.firstMove, piece, position[0], position[1]):
-                            player.point += piece.value # le sumamos los puntos a la IA
-                            player.delete_ia_piece(piece) # Borramos la piesa colocada
+                            if self.the_board.place_piece(player.firstMove, piece, position[0], position[1]):
+                                player.point += piece.value # le sumamos los puntos a la IA
+                                player.delete_ia_piece(piece) # Borramos la piesa colocada
+                                player.firstMove = False
+                                #print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
+                                print("\033c", end="")
+                                self.the_board.print_map()
+                                self.next_turn()
+
+                            else:
+
+                                print(f"Error: {player.name} no pudo colocar la pieza.")
+                                player.canPlay = False
+
+                        else:
+
+                            print(f"{player.name} no tiene movimientos válidos.")
+                            
+                            self.all_players_done = self.all_players_done+1
+                            #print(f'Valor de self.all_players_done = {self.all_players_done}')
+
+                            player.canPlay = False
+
+                    else:# si es el primer turno de la IA
+                        print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada Su primera jugada...")
+
+                        width = self.the_board.width
+                        high = self.the_board.high
+                        RanPieceId =random.randint(0,20)
+
+                        x = random.randint(0, width)
+                        y = random.randint(0, high)
+
+                        if self.the_board.place_piece(player.firstMove, player.pieces[RanPieceId], x, y):
+                            player.point += int(player.pieces[RanPieceId].value) # le sumamos los puntos a la IA
+                            player.delete_ia_piece(player.pieces[RanPieceId]) # Borramos la piesa colocada
                             player.firstMove = False
                             #print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
                             print("\033c", end="")
                             self.the_board.print_map()
                             self.next_turn()
-
                         else:
-
                             print(f"Error: {player.name} no pudo colocar la pieza.")
-                            player.canPlay = False
-
-                    else:
-
-                        print(f"{player.name} no tiene movimientos válidos.")
+                            #input()
+                            #player.canPlay = False
                         
-                        self.all_players_done = self.all_players_done+1
-                        #print(f'Valor de self.all_players_done = {self.all_players_done}')
+                        width = 0
+                        high = 0
+                        RanPieceId = 0
+                        x = 0
+                        y = 0
 
-                        player.canPlay = False
-
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 # Si es Humano
                 else:
 

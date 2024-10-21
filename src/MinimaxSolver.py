@@ -25,7 +25,7 @@ class MinimaxSolver:
         best_score = float('-inf')
 
         # Limita la profundidad para evitar bucles infinitos
-        max_depth = 4 # se redujo de 4 a 3
+        max_depth = 5 # se redujo de 4 a 3
 
         for depth in range(1, max_depth + 1):  # Limita la búsqueda a una profundidad máxima de 4
             try:
@@ -45,7 +45,7 @@ class MinimaxSolver:
         # Verifica si el tiempo límite se ha agotado
 
         if time.time() - self.time_start > self.max_time:
-            print("El tiempo se ha agotado")
+            
             raise TimeoutError("Tiempo agotado para Minimax")
 
         # Si llega a la profundidad máxima o el juego termina, retorna la heurística del estado actual
@@ -74,7 +74,7 @@ class MinimaxSolver:
                 print(f"Poda alfa-beta realizada en depth {depth}, Alpha: {alpha}, Beta: {beta}")
                 break
 
-        print(f"Llamadas a _maximize: {contador_llamadas} en depth {depth}")
+        #print(f"Llamadas a _maximize: {contador_llamadas} en depth {depth}")
         return best_move, max_score
 
     # Busca el mejor movimiento para el oponente (el jugador que intenta minimizar el puntaje de la IA).
