@@ -7,6 +7,7 @@ from MinimaxSolver import MinimaxSolver
 class Game:
     def __init__(self):
         self.initialized_players = False
+        self.nodes_generate = 0
         self.listaJugadores = []
         # Para rastrear el turno actual del jugador, 0 para el primer jugador, 1 para el segundo
         self.all_players_done = 0
@@ -256,7 +257,9 @@ class Game:
 
     #  Bucle principal del juego
     def play_game(self):
+
         if self.all_players_done < 2:
+
             print("\033c", end="")
             self.the_board.print_map()
 
@@ -372,6 +375,7 @@ class Game:
         print(f'\n {winner.name} HA GANADO!')
         print(f'\n Info.\n')
         print(f'\n Tiempo de busqueda configurado para Mini-MAx: {self.Game_max_time}s')
+        print(f'\n Total de nodos generados: {self.nodes_generate}')
         print('''
             ░░░░░░░░░░░░░░░░░░  FELICIDADES  ░░░░░░░░░░░░░░░░░░░░░░
         ''')
@@ -408,8 +412,9 @@ class Game:
 
                         # Agrega el nuevo estado a la lista de posibles estados
                         possible_states.append((move, new_game_state))
-
+                        
                         contador_estados += 1  # Incrementa el contador
+                        self.nodes_generate += contador_estados  #contamos los nodos generales creados
 
         print(f"Estados generados: {contador_estados}")
         return possible_states[:1000]  # Limitar la generación de estados a 100 si es necesario
