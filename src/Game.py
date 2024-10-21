@@ -12,12 +12,18 @@ class Game:
         self.current_turn = 0
         self.the_board = Board(16, 16)
         if not self.initialized_players:
+            self.initial_settings() # Configuramos antes de Jugar
             self.initialize_players()  # Solo inicializamos si no está inicializado
             self.initialized_players = True  # Marcamos como inicializados
         self.play_game()
         self.display_final_scores()
 
         #  Configura los jugadores al comienzo del juego
+
+    def initial_settings(self):
+        print('Aqui colocare las configuraciones. Enter para continuar.')
+        input()
+        print("\033c", end="")
 
     def initialize_players(self):
         if self.initialized_players:
@@ -29,10 +35,10 @@ class Game:
                             ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
                             ░░░░░░░░░░░░░░░░░░░-- BLOKUS --░░░░░░░░░░░░░░░░░░░░░░░
                             ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-                [1]: 2 jugadores   [2]: 4 jugadores
+                \n\t\t[1]: 2 jugadores\n\n\t\t[2]: 4 jugadores
                     ''')
 
-            option = input('\n\t:>')
+            option = input('\t\t:>')
 
             if self.debug_option(option):
                 break
@@ -49,11 +55,8 @@ class Game:
 
             while True:
                 print("\033c", end="")
-                print(f'Jugador: {name_player_1}')
-                type = input('''
-                    Tipo de jugador. 
-                    [1]: IA [2]: Humano
-                :>''')
+                print(f'\n\t\tJugador: {name_player_1}\n\n\t\tTipo de jugador.\n\n\t\t[1]: IA \n\n\t\t[2]: Humano')
+                type = input('\t\t:>')
 
                 if self.debug_option(type):
                     break
@@ -70,11 +73,8 @@ class Game:
 
             while True:
                 print("\033c", end="")
-                print(f'Jugador: {name_player_2}')
-                type = input('''
-                    Tipo de jugador. 
-                    [1]: IA [2]: Humano
-                :>''')
+                print(f'\n\t\tJugador: {name_player_2}\n\n\t\tTipo de jugador.\n\n\t\t[1]: IA \n\n\t\t[2]: Humano')
+                type = input('\t\t:>')
 
                 if self.debug_option(type):
                     break
@@ -101,11 +101,8 @@ class Game:
 
             while True:
                 print("\033c", end="")
-                print(f'Jugador: {name_player_1}')
-                type = input('''
-                    Tipo de jugador. 
-                    [1]: IA [2]: Humano
-                :>''')
+                print(f'\n\t\tJugador: {name_player_1}\n\n\t\tTipo de jugador.\n\n\t\t[1]: IA \n\n\t\t[2]: Humano')
+                type = input('\t\t:>')
 
                 if self.debug_option(type):
                     break
@@ -122,11 +119,8 @@ class Game:
 
             while True:
                 print("\033c", end="")
-                print(f'Jugador: {name_player_2}')
-                type = input('''
-                    Tipo de jugador. 
-                    [1]: IA [2]: Humano
-                :>''')
+                print(f'\n\t\tJugador: {name_player_2}\n\n\t\tTipo de jugador.\n\n\t\t[1]: IA \n\n\t\t[2]: Humano')
+                type = input('\t\t:>')
 
                 if self.debug_option(type):
                     break
@@ -143,11 +137,8 @@ class Game:
 
             while True:
                 print("\033c", end="")
-                print(f'Jugador: {name_player_3}')
-                type = input('''
-                    Tipo de jugador. 
-                    [1]: IA [2]: Humano
-                :>''')
+                print(f'\n\t\tJugador: {name_player_3}\n\n\t\tTipo de jugador.\n\n\t\t[1]: IA \n\n\t\t[2]: Humano')
+                type = input('\t\t:>')
 
                 if self.debug_option(type):
                     break
@@ -164,11 +155,8 @@ class Game:
 
             while True:
                 print("\033c", end="")
-                print(f'Jugador: {name_player_4}')
-                type = input('''
-                    Tipo de jugador. 
-                    [1]: IA [2]: Humano
-                :>''')
+                print(f'\n\t\tJugador: {name_player_4}\n\n\t\tTipo de jugador.\n\n\t\t[1]: IA \n\n\t\t[2]: Humano')
+                type = input('\t\t:>')
 
                 if self.debug_option(type):
                     break
@@ -181,8 +169,8 @@ class Game:
                 player_4_type = 'Human'
 
             print("\033c", end="")
-            print(f'Name: {name_player_1} type: {player_1_type}\nName: {name_player_2} type: {player_2_type}\nName: {name_player_3} type: {player_3_type}\nName: {name_player_4} type: {player_4_type}')
-            input()
+            '''print(f'Name: {name_player_1} type: {player_1_type}\nName: {name_player_2} type: {player_2_type}\nName: {name_player_3} type: {player_3_type}\nName: {name_player_4} type: {player_4_type}')
+            input()'''
 
             player_1 = Player(1, name_player_1, color_player_1, player_type=player_1_type)
             player_2 = Player(2, name_player_2, color_player_2, player_type=player_2_type)
@@ -190,6 +178,7 @@ class Game:
             player_4 = Player(4, name_player_4, color_player_4, player_type=player_4_type)
 
             self.listaJugadores = [player_1, player_2, player_3, player_4]
+
 
         self.initialized_players = True
     
@@ -206,7 +195,6 @@ class Game:
             return False 
         else:
             return True
-
     
     def validate_name(self, text):
         while True:  # Bucle se ejecutará hasta que se ingresen nombres válidos
@@ -267,6 +255,7 @@ class Game:
                             player.delete_ia_piece(piece) # Borramos la piesa colocada
                             player.firstMove = False
                             #print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
+                            print("\033c", end="")
                             self.the_board.print_map()
                             self.next_turn()
 
@@ -292,6 +281,7 @@ class Game:
                     if jugada_valida:
 
                         player.firstMove = False
+                        print("\033c", end="")
                         self.the_board.print_map()
                         self.next_turn()
                     else:

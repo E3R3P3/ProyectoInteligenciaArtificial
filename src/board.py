@@ -88,11 +88,14 @@ class Board:
     #  Evalúa el estado del juego desde la perspectiva de un jugador, para guiar la toma de decisiones de la IA.
     def heuristic(self, player):
         score = player.point
-        player_symbol = player.pieces[0].symbol
+        
+        if len(player.pieces) <= 1:
+            return 3
 
         # Heurística 1 : Penaliza al jugador por las piezas que aún le quedan por colocar
         remaining_pieces_penalty = -len(player.pieces) * 5
 
+        player_symbol = player.pieces[0].symbol
         # Heurística 2: Recompensa al jugador por ocupar más espacio en el tablero
         coverage_bonus = sum(row.count(player_symbol) for row in self.map) * 10
 
