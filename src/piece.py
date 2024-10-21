@@ -70,7 +70,7 @@ class Piece:
         ]
         pieces = []
 
-        symbols = {'Rojo': '#', 'Azul': '@', 'Amarillo': 'T', 'Verde': 'L'}
+        symbols = {'Rojo': '#', 'Azul': '@', 'Amarillo': '$', 'Verde': 'Ñ'}
 
         # Llenará la lista anterior con 21 piezas
         for i in range(21):

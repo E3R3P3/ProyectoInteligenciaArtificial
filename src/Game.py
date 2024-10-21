@@ -8,39 +8,206 @@ class Game:
         self.initialized_players = False
         self.listaJugadores = []
         # Para rastrear el turno actual del jugador, 0 para el primer jugador, 1 para el segundo
+        self.all_players_done = 0
         self.current_turn = 0
         self.the_board = Board(16, 16)
         if not self.initialized_players:
             self.initialize_players()  # Solo inicializamos si no está inicializado
             self.initialized_players = True  # Marcamos como inicializados
         self.play_game()
+        self.display_final_scores()
 
         #  Configura los jugadores al comienzo del juego
 
     def initialize_players(self):
         if self.initialized_players:
             return
-
-        print("\033c", end="")  # Esto limpia la consola solo la primera vez
-        print('''
-                        ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-                        ░░░░░░░░░░░░░░░░░░░-- BLOKUS --░░░░░░░░░░░░░░░░░░░░░░░
-                        ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-                ''')
-
-        name_player_1 = self.validate_name('Jugador_1')
-        color_player_1 = 'Rojo'
-
-        name_player_2 = self.validate_name('Jugador_2')
-        color_player_2 = 'Azul'
-
         print("\033c", end="")
-        player_1 = Player(1, name_player_1, color_player_1, player_type="Human")
-        player_2 = Player(2, name_player_2, color_player_2, player_type="IA")
+        while True:
+            
+            print('''
+                            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+                            ░░░░░░░░░░░░░░░░░░░-- BLOKUS --░░░░░░░░░░░░░░░░░░░░░░░
+                            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+                [1]: 2 jugadores   [2]: 4 jugadores
+                    ''')
 
-        self.listaJugadores = [player_1, player_2]
-        self.initialized_players = True  # Asegura que ya fueron inicializados los jugadores
+            option = input('\n\t:>')
 
+            if self.debug_option(option):
+                break
+            else:
+                continue
+        
+        option = int(option)
+
+        if option == 1:
+            option = 0
+
+            name_player_1 = self.validate_name('Jugador_1')
+            color_player_1 = 'Rojo'
+
+            while True:
+                print("\033c", end="")
+                print(f'Jugador: {name_player_1}')
+                type = input('''
+                    Tipo de jugador. 
+                    [1]: IA [2]: Humano
+                :>''')
+
+                if self.debug_option(type):
+                    break
+
+            type = int(type)
+
+            if type == 1:
+                player_1_type = 'IA'
+            elif type == 2:
+                player_1_type = 'Human'
+
+            name_player_2 = self.validate_name('Jugador_2')
+            color_player_2 = 'Azul'
+
+            while True:
+                print("\033c", end="")
+                print(f'Jugador: {name_player_2}')
+                type = input('''
+                    Tipo de jugador. 
+                    [1]: IA [2]: Humano
+                :>''')
+
+                if self.debug_option(type):
+                    break
+
+            type = int(type)
+
+            if type == 1:
+                player_2_type = 'IA'
+            elif type == 2:
+                player_2_type = 'Human'
+
+            print("\033c", end="")
+
+            player_1 = Player(1, name_player_1, color_player_1, player_type=player_1_type)
+            player_2 = Player(2, name_player_2, color_player_2, player_type=player_2_type)
+
+            self.listaJugadores = [player_1, player_2]
+
+        if option == 2:
+            option = 0
+
+            name_player_1 = self.validate_name('Jugador_1')
+            color_player_1 = 'Rojo'
+
+            while True:
+                print("\033c", end="")
+                print(f'Jugador: {name_player_1}')
+                type = input('''
+                    Tipo de jugador. 
+                    [1]: IA [2]: Humano
+                :>''')
+
+                if self.debug_option(type):
+                    break
+
+            type = int(type)
+
+            if type == 1:
+                player_1_type = 'IA'
+            elif type == 2:
+                player_1_type = 'Human'
+
+            name_player_2 = self.validate_name('Jugador_2')
+            color_player_2 = 'Amarillo'
+
+            while True:
+                print("\033c", end="")
+                print(f'Jugador: {name_player_2}')
+                type = input('''
+                    Tipo de jugador. 
+                    [1]: IA [2]: Humano
+                :>''')
+
+                if self.debug_option(type):
+                    break
+
+            type = int(type)
+
+            if type == 1:
+                player_2_type = 'IA'
+            elif type == 2:
+                player_2_type = 'Human'
+
+            name_player_3 = self.validate_name('Jugador_3')
+            color_player_3 = 'Azul'
+
+            while True:
+                print("\033c", end="")
+                print(f'Jugador: {name_player_3}')
+                type = input('''
+                    Tipo de jugador. 
+                    [1]: IA [2]: Humano
+                :>''')
+
+                if self.debug_option(type):
+                    break
+
+            type = int(type)
+
+            if type == 1:
+                player_3_type = 'IA'
+            elif type == 2:
+                player_3_type = 'Human'
+
+            name_player_4 = self.validate_name('Jugador_4')
+            color_player_4 = 'Verde'
+
+            while True:
+                print("\033c", end="")
+                print(f'Jugador: {name_player_4}')
+                type = input('''
+                    Tipo de jugador. 
+                    [1]: IA [2]: Humano
+                :>''')
+
+                if self.debug_option(type):
+                    break
+
+            type = int(type)
+
+            if type == 1:
+                player_4_type = 'IA'
+            elif type == 2:
+                player_4_type = 'Human'
+
+            print("\033c", end="")
+            print(f'Name: {name_player_1} type: {player_1_type}\nName: {name_player_2} type: {player_2_type}\nName: {name_player_3} type: {player_3_type}\nName: {name_player_4} type: {player_4_type}')
+            input()
+
+            player_1 = Player(1, name_player_1, color_player_1, player_type=player_1_type)
+            player_2 = Player(2, name_player_2, color_player_2, player_type=player_2_type)
+            player_3 = Player(3, name_player_3, color_player_3, player_type=player_3_type)
+            player_4 = Player(4, name_player_4, color_player_4, player_type=player_4_type)
+
+            self.listaJugadores = [player_1, player_2, player_3, player_4]
+
+        self.initialized_players = True
+    
+    def debug_option(sef, option):
+
+        if not option.isdigit():
+                print("\033c", end="")
+                print('\n\tSolo numeros, no letras. Intenta nuevamente.')
+                return False
+        option = int(option)
+        if option < 1 or option > 2:
+            print("\033c", end="")
+            print('\n\tSolo numeros, de las opciones. Intenta nuevamente.')
+            return False 
+        else:
+            return True
+
+    
     def validate_name(self, text):
         while True:  # Bucle se ejecutará hasta que se ingresen nombres válidos
             name = input(f"\n\tNombre del {text}:>").strip()  # Elimina espacios
@@ -72,53 +239,87 @@ class Game:
 
     #  Bucle principal del juego
     def play_game(self):
-        self.the_board.print_map()
+        if self.all_players_done < 2:
+            print("\033c", end="")
+            self.the_board.print_map()
+
         while self.has_players():
+
             player = self.current_player()
-            if self.is_terminal():
-                print("\nEl juego ha terminado. No hay más movimientos posibles.")
-                break
+
             if player.canPlay:
-                print(f'{self.current_turn}')
+
+                #print(f'AAA{self.current_turn}')
                 # Si es IA
+
                 if player.type == "IA":
+
                     print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada...")
                     solver = MinimaxSolver(player.name)
                     best_move = solver.solve(self)
+
                     if best_move:
+
                         piece, position = best_move
+
                         if self.the_board.place_piece(player.firstMove, piece, position[0], position[1]):
-                            player.delete_ia_piece(piece)
+                            player.point += piece.value # le sumamos los puntos a la IA
+                            player.delete_ia_piece(piece) # Borramos la piesa colocada
                             player.firstMove = False
-                            print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
+                            #print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
+                            self.the_board.print_map()
+                            self.next_turn()
+
                         else:
+
                             print(f"Error: {player.name} no pudo colocar la pieza.")
+                            player.canPlay = False
+
                     else:
+
                         print(f"{player.name} no tiene movimientos válidos.")
+                        
+                        self.all_players_done = self.all_players_done+1
+                        #print(f'Valor de self.all_players_done = {self.all_players_done}')
+
                         player.canPlay = False
+
                 # Si es Humano
                 else:
-                    jugada_valida = player.pick_piece(self.the_board)
-                    if jugada_valida:
-                        player.firstMove = False
 
-                self.the_board.print_map()
-                self.next_turn()
+                    jugada_valida = player.pick_piece(self.the_board)
+
+                    if jugada_valida:
+
+                        player.firstMove = False
+                        self.the_board.print_map()
+                        self.next_turn()
+                    else:
+                        player.canPlay = False  
             else:
-                print(f"{player.name} no puede jugar.")
+
+                #print(f"{player.name} no puede jugar.")
+                self.all_players_done = self.all_players_done+1
+                #print(f'Valor de self.all_players_done = {self.all_players_done}')
+
                 self.next_turn()
-        self.display_final_scores()
+        #self.display_final_scores()  
 
     #  Muestra los puntajes finales de los jugadores y anuncia al ganador.
     def display_final_scores(self):
-            print("\033", end="")
-            for player in self.listaJugadores:
-                print(f'\nPuntos de {player.name}: {player.point}')
-            winner = max(self.listaJugadores, key=lambda x: x.point)
-            print(f'\n {winner.name} HA GANADO!')
-            print('''
-                    ░░░░░░░░░░░░░░░░░░  FELICIDADES  ░░░░░░░░░░░░░░░░░░░░░░
-            ''')
+        print("\033", end="")
+
+        for player in self.listaJugadores:
+            # Si el jugador tiene piezas, obtener el símbolo de la primera pieza
+            player_symbol = player.pieces[0].symbol if player.pieces else "N/A"
+            print(f'Jugador: {player.name}, Tipo: {player.type}, Puntos: {player.point}, Símbolo de pieza: {player_symbol}')
+
+        
+        winner = max(self.listaJugadores, key=lambda x: x.point)
+        print(f'\n {winner.name} HA GANADO!')
+        print('''
+            ░░░░░░░░░░░░░░░░░░  FELICIDADES  ░░░░░░░░░░░░░░░░░░░░░░
+        ''')
 
     #   Genera todos los posibles estados de juego a partir de cada jugada válida.
     def children(self):
@@ -155,7 +356,7 @@ class Game:
 
                         contador_estados += 1  # Incrementa el contador
 
-        print(f"Estados generados: {contador_estados}")
+        #print(f"Estados generados: {contador_estados}")
         return possible_states[:1000]  # Limitar la generación de estados a 100 si es necesario
 
     #  Verifica si el juego ha terminado:

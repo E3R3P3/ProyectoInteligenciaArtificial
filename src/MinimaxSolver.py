@@ -71,16 +71,19 @@ class MinimaxSolver:
             alpha = max(alpha, max_score)
 
             if alpha >= beta:
-                print(f"Poda alfa-beta realizada en depth {depth}, Alpha: {alpha}, Beta: {beta}")
+                #print(f"Poda alfa-beta realizada en depth {depth}, Alpha: {alpha}, Beta: {beta}")
                 break
 
-        print(f"Llamadas a _maximize: {contador_llamadas} en depth {depth}")
+        #print(f"Llamadas a _maximize: {contador_llamadas} en depth {depth}")
         return best_move, max_score
 
     # Busca el mejor movimiento para el oponente (el jugador que intenta minimizar el puntaje de la IA).
     def _minimize(self, game, alpha, beta, depth):
+
         contador_llamadas = 0  # Contador de llamadas
+
         if time.time() - self.time_start > self.max_time:
+            
             raise TimeoutError("Tiempo agotado para Minimax")
 
         if depth == 0 or game.is_terminal():
@@ -103,6 +106,6 @@ class MinimaxSolver:
             beta = min(beta, min_score)
             if alpha >= beta:
                 break
-        if depth == 1:  # Solo imprime para depth 1, o ajusta según tu preferencia
-            print(f"Llamadas a _minimize: {contador_llamadas} en depth {depth}")
+        '''if depth == 1:  # Solo imprime para depth 1, o ajusta según tu preferencia
+            print(f"Llamadas a _minimize: {contador_llamadas} en depth {depth}")'''
         return best_move, min_score

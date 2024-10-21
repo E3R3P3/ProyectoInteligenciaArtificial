@@ -59,17 +59,24 @@ class Player:
             pos_y = input("Ingresa el número de columna:> ")
 
             if pos_x.isdigit() and pos_y.isdigit():
+
                 pos_x, pos_y = int(pos_x), int(pos_y)
+
                 if 0 <= pos_x < board.high and 0 <= pos_y < board.width:
+
                     if board.can_place_piece(self.firstMove, piece, pos_x, pos_y):
+
                         board.place_piece(self.firstMove, piece, pos_x, pos_y)
                         self.firstMove = False
                         self.pieces.remove(piece)  # Remueve la pieza después de colocarla
                         self.point += piece.value
+
                         print(f"Pieza colocada en la posición ({pos_x}, {pos_y}). Tablero actualizado.")
+
                         return True
                     else:
                         print("En tu primera jugada, debes colocar la pieza en una esquina.")
+                        
             print("Posición no válida. Intenta nuevamente.")
 
     #  Combina selección y colocación de la pieza para separar responsabilidades
@@ -82,7 +89,7 @@ class Player:
 
             if select == "2":  # Si elige rendirse
                 self.canPlay = False
-                return None
+                return False
 
             if select == "1":  # Si elige colocar una pieza
                 selected_piece = self.select_piece()  # Elige la pieza
