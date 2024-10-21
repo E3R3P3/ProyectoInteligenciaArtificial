@@ -9,6 +9,7 @@ class Game:
         self.listaJugadores = []
         # Para rastrear el turno actual del jugador, 0 para el primer jugador, 1 para el segundo
         self.all_players_done = 0
+        self.Game_max_time = 4
         self.current_turn = 0
         self.the_board = Board(16, 16)
         if not self.initialized_players:
@@ -21,8 +22,25 @@ class Game:
         #  Configura los jugadores al comienzo del juego
 
     def initial_settings(self):
-        print('Aqui colocare las configuraciones. Enter para continuar.')
-        input()
+        while True:
+            print('''
+                            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+                            ░░░░░░░░░░░░░░░░░░░-- BLOKUS --░░░░░░░░░░░░░░░░░░░░░░░
+                            ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+                    ''')
+            time = input('\n\tTiempo de busqueda para Mini-Max:>')
+            if not time.isdigit():
+                    print("\033c", end="")
+                    print('\n\tSolo numeros, no letras. Intenta nuevamente.')
+                    continue
+            time = int(time)
+            if time < 1 or time > 10:
+                print("\033c", end="")
+                print('\n\tEl maximo es 10. Intenta nuevamente.')
+                continue 
+            else:
+                self.Game_max_time = time
+                break
         print("\033c", end="")
 
     def initialize_players(self):
@@ -244,6 +262,7 @@ class Game:
 
                     print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada...")
                     solver = MinimaxSolver(player.name)
+                    solver.max_time = self.Game_max_time
                     best_move = solver.solve(self)
 
                     if best_move:
@@ -301,12 +320,14 @@ class Game:
 
         for player in self.listaJugadores:
             # Si el jugador tiene piezas, obtener el símbolo de la primera pieza
-            player_symbol = player.pieces[0].symbol if player.pieces else "N/A"
+            player_symbol = player.pieces[0].symbol if player.pieces else "#"
             print(f'Jugador: {player.name}, Tipo: {player.type}, Puntos: {player.point}, Símbolo de pieza: {player_symbol}')
 
         
         winner = max(self.listaJugadores, key=lambda x: x.point)
         print(f'\n {winner.name} HA GANADO!')
+        print(f'\n Info.\n')
+        print(f'\n Tiempo de busqueda configurado para Mini-MAx: {self.Game_max_time}s')
         print('''
             ░░░░░░░░░░░░░░░░░░  FELICIDADES  ░░░░░░░░░░░░░░░░░░░░░░
         ''')
@@ -346,7 +367,7 @@ class Game:
 
                         contador_estados += 1  # Incrementa el contador
 
-        #print(f"Estados generados: {contador_estados}")
+        print(f"Estados generados: {contador_estados}")
         return possible_states[:1000]  # Limitar la generación de estados a 100 si es necesario
 
     #  Verifica si el juego ha terminado:

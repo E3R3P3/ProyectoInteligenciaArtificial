@@ -126,5 +126,6 @@ class Board:
                         distance = min(abs(i - corner[0]) + abs(j - corner[1]) for corner in corners)
                         corner_proximity_bonus += max(5 - distance, 0)
         # Suma de todos los factores
+        print(f'Heurísticas: {remaining_pieces_penalty},{coverage_bonus},{big_piece_penalty},{adjacent_piece_penalty}, {corner_proximity_bonus}')
         score += remaining_pieces_penalty + coverage_bonus + big_piece_penalty + adjacent_piece_penalty + corner_proximity_bonus
         return score
