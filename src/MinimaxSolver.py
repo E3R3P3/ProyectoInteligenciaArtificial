@@ -19,9 +19,9 @@ class MinimaxSolver:
         best_score = float('-inf')
 
         # Limita la profundidad para evitar bucles infinitos
-        max_depth = 4 # se redujo de 4 a 3
+        _max_depth = 500 # se redujo de 4 a 3
 
-        for depth in range(1, max_depth + 1):  # Limita la búsqueda a una profundidad máxima de 4
+        for depth in range(1, _max_depth + 1):  # Limita la búsqueda a una profundidad máxima de 4
             try:
 
                 move, score = self._maximize(game, float('-inf'), float('inf'), depth)
@@ -133,8 +133,5 @@ class MinimaxSolver:
             if alpha >= beta:
 
                 break
-
-        '''if depth == 1:  # Solo imprime para depth 1, o ajusta según tu preferencia
-            print(f"Llamadas a _minimize: {contador_llamadas} en depth {depth}")'''
         
         return best_move, min_score
