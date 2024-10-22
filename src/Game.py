@@ -15,42 +15,61 @@ class Game:
         self.Game_max_time = 4
         self.current_turn = 0
         self.the_board = Board(16, 16)
+
         if not self.initialized_players:
+
             self.initial_settings() # Configuramos antes de Jugar
             self.initialize_players()  # Solo inicializamos si no está inicializado
             self.initialized_players = True  # Marcamos como inicializados
+
         self.play_game()
         self.display_final_scores()
 
         #  Configura los jugadores al comienzo del juego
 
     def initial_settings(self):
+
         print("\033c", end="")
+
         while True:
             print('''
                             ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
                             ░░░░░░░░░░░░░░░░░░░-- BLOKUS --░░░░░░░░░░░░░░░░░░░░░░░
                             ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
                     ''')
+            
             time = input('\n\tTiempo de busqueda para Mini-Max:>')
+
             if not time.isdigit():
+                    
                     print("\033c", end="")
                     print('\n\tSolo numeros, no letras. Intenta nuevamente.')
+
                     continue
+            
             time = int(time)
+
             if time < 1 or time > 20:
+
                 print("\033c", end="")
                 print('\n\tEl maximo es 20s. Intenta nuevamente.')
+
                 continue 
+
             else:
+
                 self.Game_max_time = time
                 break
+
         print("\033c", end="")
 
     def initialize_players(self):
+
         if self.initialized_players:
             return
+        
         print("\033c", end="")
+
         while True:
             
             print('''
@@ -63,8 +82,11 @@ class Game:
             option = input('\t\t:>')
 
             if self.debug_option(option):
+
                 break
+
             else:
+
                 continue
         
         option = int(option)
@@ -216,15 +238,23 @@ class Game:
     def debug_option(sef, option):
 
         if not option.isdigit():
+                
                 print("\033c", end="")
                 print('\n\tSolo numeros, no letras. Intenta nuevamente.')
+
                 return False
+        
         option = int(option)
+
         if option < 1 or option > 3:
+
             print("\033c", end="")
             print('\n\tSolo numeros, de las opciones. Intenta nuevamente.')
+
             return False 
+        
         else:
+
             return True
     
     def validate_name(self, text):
@@ -243,24 +273,28 @@ class Game:
 
     # Verifica si al menos un jugador puede continuar jugando
     def has_players(self):
-        #  Verifica cuales jugadores de la lista, tienen la propiedad "canPlay = True"
-        return any(player.canPlay for player in self.listaJugadores)
+        
+        return any(player.canPlay for player in self.listaJugadores)#  Verifica cuales jugadores de la lista, tienen la propiedad "canPlay = True"
 
     # Retorna el jugador del turno actual
     def current_player(self):
+
         return self.listaJugadores[self.current_turn]
 
     # Avanza al siguiente jugador que puede jugar, ignorando a los rendidos
     def next_turn(self):
+
         self.current_turn = (self.current_turn + 1) % len(self.listaJugadores)
+
         while not self.listaJugadores[self.current_turn].canPlay:
+
             self.current_turn = (self.current_turn + 1) % len(self.listaJugadores)
 
     def calculate_depth(self, depth):
         
         if depth >= self.max_depth:
-            self.max_depth = depth
 
+            self.max_depth = depth
 
     #  Bucle principal del juego
     def play_game(self):
@@ -278,13 +312,12 @@ class Game:
 
                 #print(f'AAA{self.current_turn}')
                 # Si es IA
-               
-
                 if player.type == "IA":
- #++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
                     if not player.firstMove:
 
                         print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada...")
+
                         solver = MinimaxSolver(player.name)
                         solver.max_time = self.Game_max_time
                         best_move = solver.solve(self)
@@ -299,13 +332,17 @@ class Game:
                                 player.delete_ia_piece(piece) # Borramos la piesa colocada
                                 player.firstMove = False
                                 #print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
+                                
                                 print("\033c", end="")
+
                                 self.the_board.print_map()
                                 self.next_turn()
                                 self.calculate_depth(solver.max_depth) # evalua la prufundidad maxima encontrada
+
                             else:
 
                                 print(f"Error: {player.name} no pudo colocar la pieza.")
+
                                 player.canPlay = False
 
                         else:
@@ -313,11 +350,13 @@ class Game:
                             print(f"{player.name} no tiene movimientos válidos.")
                             
                             self.all_players_done = self.all_players_done+1
+
                             #print(f'Valor de self.all_players_done = {self.all_players_done}')
 
                             player.canPlay = False
 
                     else:# si es el primer turno de la IA
+
                         print(f"\nEl jugador IA llamado {player.name}, está calculando su jugada Su primera jugada...")
 
                         width = self.the_board.width
@@ -328,14 +367,20 @@ class Game:
                         y = random.randint(0, high)
 
                         if self.the_board.place_piece(player.firstMove, player.pieces[RanPieceId], x, y):
+
                             player.point += int(player.pieces[RanPieceId].value) # le sumamos los puntos a la IA
                             player.delete_ia_piece(player.pieces[RanPieceId]) # Borramos la piesa colocada
                             player.firstMove = False
+
                             #print(f"\nPieza {piece.symbol} colocada por {player.name} en la posición {position}. + {piece.value} puntos sumados.")
+                            
                             print("\033c", end="")
+
                             self.the_board.print_map()
                             self.next_turn()
+
                         else:
+
                             print(f"Error: {player.name} no pudo colocar la pieza.")
                             #input()
                             #player.canPlay = False
@@ -345,8 +390,6 @@ class Game:
                         RanPieceId = 0
                         x = 0
                         y = 0
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++
                 # Si es Humano
                 else:
 
@@ -356,9 +399,11 @@ class Game:
 
                         player.firstMove = False
                         print("\033c", end="")
+
                         self.the_board.print_map()
                         #self.calculate_depth(solver.max_depth) # evalua la prufundidad maxima encontrada
                         self.next_turn()
+
                     else:
                         player.canPlay = False  
             else:
@@ -366,14 +411,15 @@ class Game:
                 #print(f"{player.name} no puede jugar.")
                 self.all_players_done = self.all_players_done+1
                 #print(f'Valor de self.all_players_done = {self.all_players_done}')
-
                 self.next_turn()
         #self.display_final_scores()  
 
     #  Muestra los puntajes finales de los jugadores y anuncia al ganador.
     def display_final_scores(self):
+
         print("\033", end="")
         print("\033c", end="")
+
         winner = max(self.listaJugadores, key=lambda x: x.point)
         
         print(f'\n Info.')
@@ -382,30 +428,36 @@ class Game:
         print(f'\n Total de nodos generados: {self.nodes_generated}')
         print(f'\n Profundidad maxima: {self.max_depth}')
         print(f'\n Tabla de puntaje.')
+
         for player in self.listaJugadores:
-            # Si el jugador tiene piezas, obtener el símbolo de la primera pieza
+           
             player_symbol = player.pieces[0].symbol if player.pieces else "#"
             print(f'\n Jugador: {player.name} Tipo: {player.type}  Puntos: {player.point}  Símbolo de pieza: {player_symbol}')
+
 
         print('''
             ░░░░░░░░░░░░░░░░░░  Fin del Juego  ░░░░░░░░░░░░░░░░░░░░░░
         ''')
 
-    #   Genera todos los posibles estados de juego a partir de cada jugada válida.
+    #   Genera todos los posibles estados de juego a partir de cada jugada.
     def children(self):
         possible_states = []
         current_player = self.current_player()
 
-        if len(current_player.pieces) == 0:  # Si no quedan piezas, no genera estados
+        if len(current_player.pieces) == 0:  # Si no quedan piezas, no genera estados/nodos
             return possible_states
 
-        contador_estados = 0  # Contador para medir los estados generados
+        counter_states = 0  # Contador para medir los estados generados/nodos
 
         for piece in current_player.pieces:
+
             for x in range(self.the_board.high):
+
                 for y in range(self.the_board.width):
+
                     # Intenta colocar la pieza en todas las posiciones posibles del tablero
                     if self.the_board.can_place_piece(current_player.firstMove, piece, x, y):
+
                         new_board = Board(self.the_board.width, self.the_board.high)
                         new_board.map = [row[:] for row in self.the_board.map]
 
@@ -426,12 +478,13 @@ class Game:
 
                         # Agrega el nuevo estado a la lista de posibles estados
                         possible_states.append((move, new_game_state))
-                        contador_estados += 1  # Incrementa el contador
+                        counter_states += 1  # Incrementa el contador
                         self.nodes_generated += 1  # Incrementa en 1 cada vez que se genera un nodo
 
 
-        #print(f"Nodos generados: {contador_estados}")
+        #print(f"Nodos generados: {counter_states}")
         return possible_states[:1000]  # Limitar la generación de estados a 100 si es necesario
+    
     #  Verifica si el juego ha terminado:
     #  Si ya no hay más movimientos posibles o si todos los jugadores se han rendido o ya no tienen piezas
     def is_terminal(self):
@@ -439,15 +492,17 @@ class Game:
         all_players_done = all(not player.canPlay or len(player.pieces) == 0 for player in self.listaJugadores)
 
         if all_players_done:
+
             return True  # Si todos los jugadores han terminado
 
         # Verifica si aún hay espacios vacíos en el tablero (esto evita el final antes de tiempo)
         for row in self.the_board.map:
+
             if '.' in row:
+
                 return False
 
         return True
-
 
 # Ejecuta el juego
 if __name__ == "__main__": #  Solo se ejecuta cuando se corre el archivo

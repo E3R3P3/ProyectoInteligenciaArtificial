@@ -18,44 +18,61 @@ class Player:
 
     # Muestra las piezas del jugador horizontalmente, alineadas
     def show_player_pieces(self):
+
         # Determina la altura máxima de las piezas
         max_height = max(len(piece.shape) for piece in self.pieces)
         # Determina el ancho máximo de las piezas
         max_width = max(max(len(row) for row in piece.shape) for piece in self.pieces)
         # Para cada fila hasta la altura máxima
         for i in range(len(self.pieces)):
+
             print(f'[{i + 1}]', end='        ')
+
         print()
         for i in range(max_height):
+
             for piece in self.pieces:
+
                 if i < len(piece.shape):
+
                     # Si la fila existe en la pieza, imprime la fila alineada con el ancho máximo
                     print(' '.join(piece.shape[i]).ljust(max_width * 2), end=' ')
+
                 else:
+
                     # Si la pieza es más pequeña, imprime espacios vacíos para mantener el formato
                     print(' ' * (max_width * 2), end=' ')
-            print()  # Nueva línea después de imprimir todas las piezas en esa fila
+
+            print()
 
     #  Permite al jugador seleccionar una pieza. Retorna dicha pieza.
     def select_piece(self):
+
         print(f"\n {self.name}, estas son tus piezas disponibles (numeradas de izquierda a derecha, del 1 al 21):\n")
         self.show_player_pieces()
 
         while True:
+
             selection = input("Escribe el número de la pieza que deseas utilizar:> ")
+
             if selection.isdigit() and 1 <= int(selection) <= len(self.pieces):
+
                 selection = int(selection) - 1
                 self.pieces[selection].show_piece()
                 return self.pieces[selection]
+            
             print("\n\tIngresa un número válido. Intenta nuevamente.")
 
     def delete_ia_piece(self, piece):
+
         self.pieces.remove(piece)
 
     #  Permite al jugador colocar su pieza en el board.
     #  Lógica de colocación REAL
     def make_move(self, piece, board):
+        count = 0
         while True:
+
             pos_x = input("Ingresa el número de fila:> ")
             pos_y = input("Ingresa el número de columna:> ")
 
@@ -77,15 +94,21 @@ class Player:
                         return True
                     else:
                         print("En tu primera jugada, debes colocar la pieza en una esquina.")
-                        
-            print("Posición no válida. Intenta nuevamente.")
+            count +=1
+            if count == 3:
+                print('Intenta con otra.')  
+                return False
+            else:          
+                print("Posición no válida. Intenta nuevamente.")
 
     #  Combina selección y colocación de la pieza para separar responsabilidades
     def pick_piece(self, board):
+
         print(f"\nTurno de: [{self.name}], de tipo: {self.type}")
 
         # Bucle hasta que el usuario ingrese una opción válida
         while True:
+
             select = input(f"\nElija la opción que desea realizar:\n[1] Elegir pieza\n[2] Rendirme\n:> ")
 
             if select == "2":  # Si elige rendirse
@@ -98,7 +121,8 @@ class Player:
                     print(f"Pieza colocada exitosamente. + {selected_piece.value} puntos sumados.")
                     return True
                 else:
-                    print("No se pudo colocar la pieza. Intenta nuevamente.")
+                    #print("No se pudo colocar la pieza. Intenta nuevamente.")
+                    continue
 
             # Mensaje de error si elige una opción inválida
             print("Opción no válida. Por favor, elige [1] o [2].")

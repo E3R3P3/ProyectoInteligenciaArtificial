@@ -3,16 +3,6 @@ import random
 
 class Piece:
     def __init__(self, shape, symbol, piece_id, color, value, orientation, coordinates=None):  # Aqui agrega mas propiedades para las piezas
-        """
-        Inicializa los atributos de la pieza.
-
-        :param forma: Matriz 2D que representa la disposición de los bloques.
-        :param piece_id: Identificador de la pieza.
-        :param color: Color de la pieza.
-        :param valor: Valor de la pieza.
-        :param orientation: Orientación de la pieza.
-        :param coordinates: Ubicación en el tablero, puede ser None.
-        """
         self.shape = shape  # Utilizamos este parametro como una lista para darle la forma a la pieza
         self.symbol = symbol
         self.piece_id = piece_id
@@ -35,16 +25,21 @@ class Piece:
     #     else:
     #         self.shape.reverse()  # reflect verticalmente
 
+    #Imprime la pieza en la consola.
     def show_piece(self):
-        """Imprime la pieza en la consola."""
+
         for fila in self.shape:
+
             print(' '.join(fila))
-        print(f"ID: {self.piece_id}, Color: {self.color}, value: {self.value}, Orientación: {self.orientation}°")
+
+        #print(f"ID: {self.piece_id}, Color: {self.color}, value: {self.value}, Orientación: {self.orientation}°")
 
     # Método para generar 21 piezas aleatorias. Devuelve una lista de objetos tipo Piece
     @classmethod
     def generate_random_pieces(cls, color):
+
         pieceValues = [1, 2, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+
         possible_shapes = [
             [['#']],  # 1
             [['#', '#']],  # 2
@@ -68,12 +63,14 @@ class Piece:
             [[' ', '#'], ['#', '#'], [' ', '#'], [' ', '#']],  # Z y
             [['#', '#'], [' ', '#'], ['#', '#']],  # Z 3x4
         ]
+
         pieces = []
 
         symbols = {'Rojo': '#', 'Azul': '@', 'Amarillo': '$', 'Verde': 'Ñ'}
 
         # Llenará la lista anterior con 21 piezas
         for i in range(21):
+
             shape = possible_shapes[i]
             symbol = symbols[color]
             value = pieceValues[i]
@@ -84,6 +81,7 @@ class Piece:
 
             # Agregando la pieza creada a la lista de piezas random
             pieces.append(piece)
+            
         # Devuelve la lista con las 21 piezas
         return pieces
 
