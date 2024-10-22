@@ -16,6 +16,7 @@ class MinimaxSolver:
         self.player_name = player_name
         self.time_start = None
         self.max_time = None
+        self.max_depth = 0
 
     #  Inicia la búsqueda Minimax con podado alfa-beta para encontrar el mejor movimiento posible.
     def solve(self, game):
@@ -25,7 +26,7 @@ class MinimaxSolver:
         best_score = float('-inf')
 
         # Limita la profundidad para evitar bucles infinitos
-        max_depth = 5 # se redujo de 4 a 3
+        max_depth = 4 # se redujo de 4 a 3
 
         for depth in range(1, max_depth + 1):  # Limita la búsqueda a una profundidad máxima de 4
             try:
@@ -55,6 +56,7 @@ class MinimaxSolver:
 
         max_score = float('-inf')
         best_move = None
+        max_local_depth = 0
 
         # Podado alpha - beta
         for move, new_state in sorted(game.children(),
@@ -69,6 +71,17 @@ class MinimaxSolver:
                 max_score = score
                 best_move = move
             alpha = max(alpha, max_score)
+
+            if depth >= max_local_depth:
+
+                max_local_depth = depth
+
+                if max_local_depth >= self.max_depth:
+
+                    self.max_depth = max_local_depth
+
+
+            #print(f'Profundidad de #{self.max_depth}')
 
             if alpha >= beta:
                 print(f"Poda alfa-beta realizada en depth {depth}, Alpha: {alpha}, Beta: {beta}")

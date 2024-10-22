@@ -7,7 +7,8 @@ from MinimaxSolver import MinimaxSolver
 class Game:
     def __init__(self):
         self.initialized_players = False
-        self.nodes_generate = 0
+        self.nodes_generated = 0
+        self.max_depth = 0
         self.listaJugadores = []
         # Para rastrear el turno actual del jugador, 0 para el primer jugador, 1 para el segundo
         self.all_players_done = 0
@@ -37,9 +38,9 @@ class Game:
                     print('\n\tSolo numeros, no letras. Intenta nuevamente.')
                     continue
             time = int(time)
-            if time < 1 or time > 10:
+            if time < 1 or time > 20:
                 print("\033c", end="")
-                print('\n\tEl maximo es 10. Intenta nuevamente.')
+                print('\n\tEl maximo es 20s. Intenta nuevamente.')
                 continue 
             else:
                 self.Game_max_time = time
@@ -255,6 +256,12 @@ class Game:
         while not self.listaJugadores[self.current_turn].canPlay:
             self.current_turn = (self.current_turn + 1) % len(self.listaJugadores)
 
+    def calculate_depth(self, depth):
+        
+        if depth >= self.max_depth:
+            self.max_depth = depth
+
+
     #  Bucle principal del juego
     def play_game(self):
 
@@ -287,6 +294,7 @@ class Game:
                             piece, position = best_move
 
                             if self.the_board.place_piece(player.firstMove, piece, position[0], position[1]):
+
                                 player.point += piece.value # le sumamos los puntos a la IA
                                 player.delete_ia_piece(piece) # Borramos la piesa colocada
                                 player.firstMove = False
@@ -294,7 +302,7 @@ class Game:
                                 print("\033c", end="")
                                 self.the_board.print_map()
                                 self.next_turn()
-
+                                self.calculate_depth(solver.max_depth) # evalua la prufundidad maxima encontrada
                             else:
 
                                 print(f"Error: {player.name} no pudo colocar la pieza.")
@@ -349,6 +357,7 @@ class Game:
                         player.firstMove = False
                         print("\033c", end="")
                         self.the_board.print_map()
+                        #self.calculate_depth(solver.max_depth) # evalua la prufundidad maxima encontrada
                         self.next_turn()
                     else:
                         player.canPlay = False  
@@ -364,20 +373,22 @@ class Game:
     #  Muestra los puntajes finales de los jugadores y anuncia al ganador.
     def display_final_scores(self):
         print("\033", end="")
-
+        print("\033c", end="")
+        winner = max(self.listaJugadores, key=lambda x: x.point)
+        
+        print(f'\n Info.')
+        print(f'\n Ganador: {winner.name} con {winner.point}')
+        print(f'\n Tiempo de busqueda configurado para Mini-MAx: {self.Game_max_time}s')
+        print(f'\n Total de nodos generados: {self.nodes_generated}')
+        print(f'\n Profundidad maxima: {self.max_depth}')
+        print(f'\n Tabla de puntaje.')
         for player in self.listaJugadores:
             # Si el jugador tiene piezas, obtener el símbolo de la primera pieza
             player_symbol = player.pieces[0].symbol if player.pieces else "#"
-            print(f'Jugador: {player.name}, Tipo: {player.type}, Puntos: {player.point}, Símbolo de pieza: {player_symbol}')
+            print(f'\n Jugador: {player.name} Tipo: {player.type}  Puntos: {player.point}  Símbolo de pieza: {player_symbol}')
 
-        
-        winner = max(self.listaJugadores, key=lambda x: x.point)
-        print(f'\n {winner.name} HA GANADO!')
-        print(f'\n Info.\n')
-        print(f'\n Tiempo de busqueda configurado para Mini-MAx: {self.Game_max_time}s')
-        print(f'\n Total de nodos generados: {self.nodes_generate}')
         print('''
-            ░░░░░░░░░░░░░░░░░░  FELICIDADES  ░░░░░░░░░░░░░░░░░░░░░░
+            ░░░░░░░░░░░░░░░░░░  Fin del Juego  ░░░░░░░░░░░░░░░░░░░░░░
         ''')
 
     #   Genera todos los posibles estados de juego a partir de cada jugada válida.
@@ -408,17 +419,19 @@ class Game:
                         new_game_state.listaJugadores = self.listaJugadores.copy()
                         new_game_state.listaJugadores[self.current_turn] = new_player
                         new_game_state.current_turn = (self.current_turn + 1) % len(self.listaJugadores)
+
+                        new_game_state.nodes_generated = self.nodes_generated
+
                         move = (piece, (x, y))
 
                         # Agrega el nuevo estado a la lista de posibles estados
                         possible_states.append((move, new_game_state))
-                        
                         contador_estados += 1  # Incrementa el contador
-                        self.nodes_generate += contador_estados  #contamos los nodos generales creados
+                        self.nodes_generated += 1  # Incrementa en 1 cada vez que se genera un nodo
 
-        print(f"Estados generados: {contador_estados}")
+
+        #print(f"Nodos generados: {contador_estados}")
         return possible_states[:1000]  # Limitar la generación de estados a 100 si es necesario
-
     #  Verifica si el juego ha terminado:
     #  Si ya no hay más movimientos posibles o si todos los jugadores se han rendido o ya no tienen piezas
     def is_terminal(self):
